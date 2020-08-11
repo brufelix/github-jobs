@@ -1,4 +1,4 @@
-.Box-JobOpportunity {
+.Box-JobCard {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,6 +10,7 @@
     border: solid 1px rgb(223, 223, 223);
     border-radius: 5px;
     background-color: white;
+    transition: all .2s ease-in-out;
 }
 
 .title {
@@ -89,7 +90,7 @@ button#apply-button {
     background-color: rgb(243, 243, 243);
 }
 
-div.Box-JobOpportunity:hover {
+div.Box-JobCard:hover {
     color: white;
     position: relative;
     border-color: rgb(0, 0, 58);

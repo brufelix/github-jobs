@@ -4,7 +4,7 @@ import './JobCard.css'
 
 export default (props: TJobCard) => {
     return (
-        <div className="Box-JobOpportunity">
+        <div className="Box-JobCard">
             <div className="title">{props.title}</div>
             <div className="Subtitle-Times">
                 <div className="time">{`Há ${props.time} Dias`}</div>
