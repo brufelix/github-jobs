@@ -3,8 +3,9 @@
     flex-wrap: wrap;
     justify-content: space-between;
     width: 900px;
-    height: 500px;
-    margin: 5px 230px 5px 230px;
+    height: auto;
+    min-height: 450px;
+    margin: 5px 230px 0px 230px;
     background-color: whitesmoke;
 }
 
