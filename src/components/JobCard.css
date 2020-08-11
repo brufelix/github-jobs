@@ -92,7 +92,7 @@ button#apply-button {
 div.Box-JobOpportunity:hover {
     color: white;
     position: relative;
-    border-color: rgb(73, 73, 223);
-    box-shadow: 2px 20px 25px 15px #8fcdff;
-    background-color: rgb(24, 24, 230);
+    border-color: rgb(0, 0, 58);
+    box-shadow: 2px 20px 25px 15px #005194;
+    background-color: rgb(0, 0, 58);
 }

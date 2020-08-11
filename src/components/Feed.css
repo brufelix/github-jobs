@@ -8,3 +8,20 @@
     margin: 5px 230px 0px 230px;
     background-color: whitesmoke;
 }
+
+.div-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: whitesmoke;
+    margin-bottom: 10px;
+}
+
+#button-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 400px;
+}

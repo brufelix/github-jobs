@@ -5,10 +5,10 @@
     justify-content: center;
     align-items: center;
     font-size: calc(10px + 2vmin);
-    border-top: 4px solid #1D5C8F;
+    border-top: 4px solid #005194;
     border-bottom: 2px solid #D7D5D4;
     color: white;
-    background: #2B7FC3;
+    background: rgb(0, 0, 58);
 }
 
 .App-nav {
