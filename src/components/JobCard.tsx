@@ -1,17 +1,18 @@
 import React from 'react'
+import {TJobCard} from '../types/types'
 import './JobCard.css'
 
-export default () => {
+export default (props: TJobCard) => {
     return (
         <div className="Box-JobOpportunity">
-            <div className="title">Senior PHP Developer</div>
+            <div className="title">{props.title}</div>
             <div className="Subtitle-Times">
-                <div className="time">Há cerca de 16h</div>
-                <div className="full-time">Full Time</div>
+                <div className="time">{`Há ${props.time} Dias`}</div>
+                <div className="full-time">{props.fullTime ? "Full Time" : "It's not full time"}</div>
             </div>
-            <div className="location">Los Angeles</div>
-            <div id="requirements">Ts/Js, Css, html, unix, bash, typescript, typescript.</div>
-            <div id="nameComporation">name of comporation</div>
+            <div className="location">{props.location}</div>
+            <div id="requirements">{props.requirements}</div>
+            <div id="nameComporation">{props.nameComporation}</div>
             <button id="apply-button">Apply Now</button>
         </div>
     )
