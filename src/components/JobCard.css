@@ -14,10 +14,15 @@
 
 .title {
     width: 208px;
-    height: 40px;
+    height: 38px;
     text-align: start;
     font-weight: bold;
-    overflow-y: scroll;
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+   -webkit-box-orient: vertical;;
 }
 
 .Subtitle-Times {
@@ -47,17 +52,20 @@
 }
 
 #requirements {
-    height: 70px;
+    height: 40px;
     width: 208px;
     text-align: start;
     margin-left: 21px;
     margin-right: 20px;
     font-size: 13px;
     font-weight: 300;
-    margin-bottom: 0;
-    white-space: nowrap;
+    margin-bottom: 20px;
+    display: -webkit-box;
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
 }
 
 #nameComporation {
@@ -85,6 +93,6 @@ div.Box-JobOpportunity:hover {
     color: white;
     position: relative;
     border-color: rgb(73, 73, 223);
-    box-shadow: 15px 15px 15px 15px #006fca;
+    box-shadow: 2px 20px 25px 15px #8fcdff;
     background-color: rgb(24, 24, 230);
 }
