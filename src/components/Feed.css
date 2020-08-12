@@ -24,6 +24,8 @@
     align-items: center;
     flex-direction: row;
     width: 400px;
+    margin-top: 24px;
+    margin-left: 20px;
 }
 
 .Title-feed {
