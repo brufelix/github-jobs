@@ -7,7 +7,7 @@ export default (props: TJobCard) => {
         <div className="Box-JobCard">
             <div className="title">{props.title}</div>
             <div className="Subtitle-Times">
-                <div className="time">{`${props.create_at}`}</div>
+                <div className="time">{`${props.created_at}`}</div>
                 <div className="full-time">{props.type}</div>
             </div>
             <div className="location">{props.location}</div>
