@@ -4,33 +4,52 @@ import JobCard from './JobCard'
 import { BASEURL, headers } from '../config/config'
 import './Feed.css'
 
-class Feed extends Component<{}, {jobsVisible: TJob[], jobsCache: TJob[], start: number, end: number}> {
+class Feed extends Component<{}, {jobsVisible: TJob[], jobsCache: TJob[], start: number, end: number, page: number}> {
     constructor(props: {}){
         super(props)
-        this.state = { jobsVisible: [], jobsCache: [], start: 0, end: 9 }
-        this.getJobs.bind(this)
+        this.state = { jobsVisible: [], jobsCache: [], start: 0, end: 9, page: 1 }
+        this.getMoreJobs.bind(this)
     }
     
-    async getJobs() {
-        let { jobsCache, jobsVisible, start, end } = this.state
-        if (jobsCache.length === 0){
-            await fetch(`${BASEURL}positions.json?description=`, {headers, mode: "cors"})
-            .then(jobs => jobs.json())
-            .then((jobs: TJob[]) => {
-                this.setState({ 
-                    jobsVisible: jobsVisible.concat(jobs.splice(start, end)) ,
-                    jobsCache: jobs
-                })                
-            }).catch(err => console.log(err))
+    updateJobsVisible() {
+        const { jobsVisible, jobsCache, start, end } = this.state 
+        this.setState({ jobsVisible: jobsVisible.concat(jobsCache.slice(start, end)) })
+        this.updateEndAndStart()
+    }    
+
+    updateEndAndStart() {
+        const { start, end } = this.state
+        this.setState({ start: start + 9, end: end + 9 })
+    }
+
+    async getMoreJobs() {
+        let { jobsVisible, jobsCache, page } = this.state
+        if ( page === 1 && jobsVisible.length < jobsCache.length ) {
+            this.updateJobsVisible()
         } else {
-            this.setState({ 
-                jobsVisible: jobsVisible.concat(jobsCache.splice(start, end)) 
-            })
+            this.setState({ page: page + 1 })
+            this.updateEndAndStart()
+            await fetch(`${BASEURL}positions.json?page=${page}`, {headers, mode: "cors"})
+                .then(jobs => jobs.json())
+                .then((jobs: TJob[]) => {
+                    this.setState({ jobsCache: jobsCache.concat(jobs) })
+                    this.updateJobsVisible()                
+                }).catch(err => console.log(err))
         }
     }
     
+    async getInitialJobs() {
+        let { start, end, page } = this.state
+        await fetch(`${BASEURL}positions.json?page=${page}`, {headers, mode: "cors"})
+        .then(jobs => jobs.json())
+        .then((jobs: TJob[]) => {
+            this.setState({  jobsVisible: jobs.slice(start, end), jobsCache: jobs })                
+            this.updateEndAndStart()
+        }).catch(err => console.log(err))
+    }
+
     componentDidMount() {
-        this.getJobs()
+        this.getInitialJobs()
     }
 
     render(){
@@ -44,7 +63,7 @@ class Feed extends Component<{}, {jobsVisible: TJob[], jobsCache: TJob[], start:
                         title={job.title} type={job.type} key={index}/>)}
                 </div>
                 <div className="div-pagination">
-                    <button id="button-pagination" onClick={() => this.getJobs()}>More Awesome Jobs</button>
+                    <button id="button-pagination" onClick={() => this.getMoreJobs()}>More Awesome Jobs</button>
                 </div>
             </React.StrictMode>
         )
