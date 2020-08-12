@@ -1,22 +1,32 @@
 import React, {Component} from 'react'
-import { TJobCard } from '../types/types'
+import { TJobCard, TJob } from '../types/types'
 import JobCard from './JobCard'
 import { BASEURL, headers } from '../config/config'
 import './Feed.css'
 
-class Feed extends Component<{}, {jobs: []}> {
-    
+class Feed extends Component<{}, {jobsVisible: TJob[], jobsCache: TJob[], start: number, end: number}> {
     constructor(props: {}){
         super(props)
-        this.state = { jobs: [] }
+        this.state = { jobsVisible: [], jobsCache: [], start: 0, end: 9 }
         this.getJobs.bind(this)
     }
     
     async getJobs() {
-        await fetch(`${BASEURL}positions.json?description=node&page=2`, {headers, mode: "cors"})
-            .then(res => res.json())
-            .then(res => {this.setState({ jobs: res }) })
-            .catch(() =>  console.log("Error"))
+        let { jobsCache, jobsVisible, start, end } = this.state
+        if (jobsCache.length === 0){
+            await fetch(`${BASEURL}positions.json?description=`, {headers, mode: "cors"})
+            .then(jobs => jobs.json())
+            .then((jobs: TJob[]) => {
+                this.setState({ 
+                    jobsVisible: jobsVisible.concat(jobs.splice(start, end)) ,
+                    jobsCache: jobs
+                })                
+            }).catch(err => console.log(err))
+        } else {
+            this.setState({ 
+                jobsVisible: jobsVisible.concat(jobsCache.splice(start, end)) 
+            })
+        }
     }
     
     componentDidMount() {
@@ -24,11 +34,11 @@ class Feed extends Component<{}, {jobs: []}> {
     }
 
     render(){
-        const { jobs } = this.state
+        const { jobsVisible } = this.state
         return (
             <React.StrictMode>
                 <div className="App-JobOpportunity-container">
-                    {jobs.map((job: TJobCard, index: number) => 
+                    {jobsVisible.map((job: TJobCard, index: number) => 
                         <JobCard company={job.company} created_at={job.created_at} location={job.location} 
                         title={job.title} type={job.type} key={index}/>)}
                 </div>
