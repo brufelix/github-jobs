@@ -1,8 +1,7 @@
 export type TJobCard = {
     title: string
-    time: number
-    fullTime: boolean
+    type: string
+    create_at: number
     location: string
-    nameComporation: string
-    requirements: string
+    company: string
 } 

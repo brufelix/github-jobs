@@ -7,12 +7,12 @@ export default (props: TJobCard) => {
         <div className="Box-JobCard">
             <div className="title">{props.title}</div>
             <div className="Subtitle-Times">
-                <div className="time">{`Há ${props.time} Dias`}</div>
-                <div className="full-time">{props.fullTime ? "Full Time" : "It's not full time"}</div>
+                <div className="time">{`${props.create_at}`}</div>
+                <div className="full-time">{props.type}</div>
             </div>
             <div className="location">{props.location}</div>
-            <div id="requirements">{props.requirements}</div>
-            <div id="nameComporation">{props.nameComporation}</div>
+            <div id="requirements">NodeJs, ReactJs, Css</div>
+            <div id="nameComporation">{props.company}</div>
             <button id="apply-button">Apply Now</button>
         </div>
     )
