@@ -13,3 +13,8 @@ export type TJob = {
     location: string
     company: string
 }
+
+export type TAction = {
+    type: string,
+    payload: string
+}
