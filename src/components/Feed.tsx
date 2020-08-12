@@ -37,6 +37,7 @@ class Feed extends Component<{}, {jobsVisible: TJob[], jobsCache: TJob[], start:
         const { jobsVisible } = this.state
         return (
             <React.StrictMode>
+                <h2 className="Title-feed">Newly Added Jobs</h2>
                 <div className="App-JobOpportunity-container">
                     {jobsVisible.map((job: TJobCard, index: number) => 
                         <JobCard company={job.company} created_at={job.created_at} location={job.location} 
