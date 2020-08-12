@@ -1,5 +1,5 @@
 const URL: string =  "https://jobs.github.com/"
-const proxyurl: string = "https://cors-anywhere.herokuapp.com/"
+const proxyurl: string = "https://murmuring-ridge-43711.herokuapp.com/"
 
 export const BASEURL: string = `${proxyurl}${URL}`
 
