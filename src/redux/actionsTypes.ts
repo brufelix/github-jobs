@@ -1,1 +1,2 @@
-export const type = ""
+export const INITIAL_JOBS_CHANGED = "INITIAL_JOBS_CHANGED"
+export const STARTED_AND_END_CHANGED = "STARTED_AND_END_CHANGED"
