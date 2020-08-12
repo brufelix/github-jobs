@@ -4,10 +4,10 @@ import JobCard from './JobCard'
 import { BASEURL, headers } from '../config/config'
 import './Feed.css'
 
-class Feed extends Component<{}, {jobsVisible: TJob[], jobsCache: TJob[], start: number, end: number, page: number}> {
+class Feed extends Component<{}, {jobsVisible: TJob[], jobsCache: TJob[], start: number, end: number, page: number, endPage: boolean}> {
     constructor(props: {}){
         super(props)
-        this.state = { jobsVisible: [], jobsCache: [], start: 0, end: 9, page: 1 }
+        this.state = { jobsVisible: [], jobsCache: [], start: 0, end: 9, page: 1, endPage: false }
         this.getMoreJobs.bind(this)
     }
     
@@ -23,7 +23,7 @@ class Feed extends Component<{}, {jobsVisible: TJob[], jobsCache: TJob[], start:
     }
 
     async getMoreJobs() {
-        let { jobsVisible, jobsCache, page } = this.state
+        let { jobsVisible, jobsCache, page, endPage } = this.state
         if ( page === 1 && jobsVisible.length < jobsCache.length ) {
             this.updateJobsVisible()
         } else {
@@ -32,6 +32,7 @@ class Feed extends Component<{}, {jobsVisible: TJob[], jobsCache: TJob[], start:
             await fetch(`${BASEURL}positions.json?page=${page}`, {headers, mode: "cors"})
                 .then(jobs => jobs.json())
                 .then((jobs: TJob[]) => {
+                    if(jobs.length < 50) this.setState({ endPage: !endPage }) 
                     this.setState({ jobsCache: jobsCache.concat(jobs) })
                     this.updateJobsVisible()                
                 }).catch(err => console.log(err))
@@ -53,7 +54,7 @@ class Feed extends Component<{}, {jobsVisible: TJob[], jobsCache: TJob[], start:
     }
 
     render(){
-        const { jobsVisible } = this.state
+        const { jobsVisible, endPage } = this.state
         return (
             <React.StrictMode>
                 <h2 className="Title-feed">Newly Added Jobs</h2>
@@ -63,7 +64,8 @@ class Feed extends Component<{}, {jobsVisible: TJob[], jobsCache: TJob[], start:
                         title={job.title} type={job.type} key={index}/>)}
                 </div>
                 <div className="div-pagination">
-                    <button id="button-pagination" onClick={() => this.getMoreJobs()}>More Awesome Jobs</button>
+                    {!endPage &&
+                        <button id="button-pagination" onClick={() => this.getMoreJobs()}>More Awesome Jobs</button>}
                 </div>
             </React.StrictMode>
         )
