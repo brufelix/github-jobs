@@ -3,13 +3,13 @@ import { bindActionCreators } from 'redux'
 import { connect, ConnectedProps } from 'react-redux'
 
 import { fetchJobs, fetchJobsCache, updateEndAndStart, updateJobsVisible, 
-    updatePage, updateEndJobs, jobsCacheChanged, updadeValueExpectedCache } from '../redux/actions'
-import { TJobCard, TStateGithubJob, TProps } from '../types/types'
+    updatePage, updateEndJobs, jobsCacheChanged, updadeValueExpectedCache, clearJobsCache, clearJobsVisible } from '../redux/actions'
+import { TJobCard, TStateGithubJob, TPropsFeed } from '../types/types'
 import JobCard from './JobCard'
 import './Feed.css'
 
 type PropsFromRedux = ConnectedProps<typeof connector>
-type Props = PropsFromRedux & TProps
+type Props = PropsFromRedux & TPropsFeed
 
 class Feed extends Component<Props> {
     constructor(props: Props) {
@@ -18,8 +18,14 @@ class Feed extends Component<Props> {
     }
 
     async getMoreJobs() {
-        const { jobsVisible, jobsCache, page, valueExpectedCache, updatePage, updateJobsVisible, 
+        const { jobsVisible, jobsCache, page, valueExpectedCache, allJobs, updatePage, updateJobsVisible, 
             updateEndAndStart, fetchJobsCache, updadeValueExpectedCache } = this.props
+        
+        if (allJobs) {
+            updatePage()
+            fetchJobsCache(page)
+        }
+        
         if (jobsVisible.length < jobsCache.length) {
             if (jobsCache.length === valueExpectedCache) {
                 updadeValueExpectedCache()
@@ -31,6 +37,14 @@ class Feed extends Component<Props> {
         }
     }
 
+    componentDidUpdate(){
+        const { fetchJobsCache, jobsCache, allJobs, page } = this.props
+        if (allJobs && jobsCache.length === 0) {
+            fetchJobsCache(page)
+        }
+
+    }
+
     componentDidMount() {
         const { page, fetchJobs, fetchJobsCache } = this.props
         fetchJobs(page)
@@ -39,12 +53,16 @@ class Feed extends Component<Props> {
     }
 
     render(){
-        const { jobsVisible, endJobs } = this.props
+        const { jobsVisible, jobsCache, endJobs, allJobs} = this.props
+        
         return (
             <React.StrictMode>
                 <h2 className="Title-feed">Newly Added Jobs</h2>
                 <div className="App-JobOpportunity-container">
-                    {jobsVisible.map((job: TJobCard, index: number) => 
+                    {!allJobs &&jobsVisible.map((job: TJobCard, index: number) => 
+                        <JobCard company={job.company} created_at={job.created_at} location={job.location} 
+                        title={job.title} type={job.type} key={index}/>)}
+                    {allJobs && jobsCache.map((job: TJobCard, index: number) => 
                         <JobCard company={job.company} created_at={job.created_at} location={job.location} 
                         title={job.title} type={job.type} key={index}/>)}
                 </div>
@@ -67,7 +85,7 @@ const mapStateToProps = (state: TStateGithubJob ) => ({
     valueExpectedCache: state.githubjobs.valueExpectedCache
 })
 const mapDispatchToProps = (dispatch: any) => 
-    bindActionCreators({ fetchJobs, fetchJobsCache, updateEndAndStart, 
+    bindActionCreators({ fetchJobs, fetchJobsCache, updateEndAndStart, clearJobsCache, clearJobsVisible,
         updateJobsVisible, updatePage, updateEndJobs, jobsCacheChanged, updadeValueExpectedCache}, dispatch)
 const connector = connect(mapStateToProps, mapDispatchToProps)
 

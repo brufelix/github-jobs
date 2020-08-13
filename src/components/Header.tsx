@@ -1,6 +1,7 @@
 import React from 'react'
+import { TPropsHeader } from '../types/types'
 import './Header.css'
-export default () => {
+export default (props: TPropsHeader) => {
     return (
         <header id="header" className="App-header">
             <nav className="App-nav">
@@ -9,7 +10,7 @@ export default () => {
                 </h2>
                 <ul>
                     <li>
-                        <a href="/">All jobs</a>
+                         <a onClick={() => props.allJobs ? "" : props.setAllJobs(true)}>All jobs</a>
                     </li>
                     <li>
                         <a href="/">Post a job</a>

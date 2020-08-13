@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, ReactHTMLElement } from 'react'
 import {FaSearch } from 'react-icons/fa'
 import { GoLocation } from 'react-icons/go'
 import { bindActionCreators } from 'redux'
@@ -6,16 +6,25 @@ import { connect, ConnectedProps } from 'react-redux'
 
 import {search, descriptionChange, locationChanged, clearJobsCache, clearJobsVisible,
     resettingStartEndValues} from '../redux/actions'
-import { TStateGithubJob, TProps } from '../types/types'
+import { TStateGithubJob, TPropsSearch } from '../types/types'
 import './Search.css'
 
 type PropsFromRedux = ConnectedProps<typeof connector>
-type Props = PropsFromRedux & TProps
+type Props = PropsFromRedux & TPropsSearch
 
 class Search extends Component<Props> {
 
+    keyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const { jobDescription, location } = this.props
+        if (e.key === 'Enter'){
+            this.handleClickSearch()
+        }
+    }
+
     handleClickSearch() {
-        const { jobDescription, location, search, resettingStartEndValues, clearJobsCache, clearJobsVisible} = this.props
+        const { jobDescription, location, search, resettingStartEndValues, clearJobsCache, 
+            clearJobsVisible, setAllJobs} = this.props
+        setAllJobs(false)
         clearJobsVisible()
         clearJobsCache()
         resettingStartEndValues()
@@ -30,15 +39,15 @@ class Search extends Component<Props> {
                 <div className="search-field-containes">
                     <div className="box">
                         <FaSearch style={{marginRight: "15px", marginLeft: "5px"}}/>
-                        <input name="Job Description" type="text" onChange={descriptionChange} 
-                        placeholder="Filter by title, benefits, companies, expertise" value={jobDescription}/> 
+                        <input name="Job Description" type="text" onChange={descriptionChange} onKeyUp={this.keyHandler}
+                            placeholder="Filter by title, benefits, companies, expertise" value={jobDescription}/> 
                         <label htmlFor="Job Description" className="label-name">Job Description</label>
                     </div>
                     |  
                     <div className="box">
                         <GoLocation style={{marginRight: "15px", marginLeft: "12px"}}/>
-                        <input name="Location" type="text" onChange={locationChanged} 
-                        placeholder="Filtrer by city, state, zip code or country" value={location}/>
+                        <input name="Location" type="text" onChange={locationChanged} onKeyUp={this.keyHandler}
+                            placeholder="Filtrer by city, state, zip code or country" value={location}/>
                         <label className="label-name" htmlFor="Location">Location</label>
                     </div>
                     <button onClick={() => this.handleClickSearch()}>Search</button>
