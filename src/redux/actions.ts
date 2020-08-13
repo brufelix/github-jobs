@@ -1,7 +1,18 @@
 import { JOBS_CHANGED, START_AND_END_CHANGED, 
-    UPDATE_VISIBLE_JOBS, PAGE_CHANGED, UPDATE_END_JOBS, JOBS_CACHE_CHANGED, VALUE_EXPECTED_CACHE_CHANGED} from './actionsTypes'
+    UPDATE_VISIBLE_JOBS, PAGE_CHANGED, UPDATE_END_JOBS, JOBS_CACHE_CHANGED, 
+    VALUE_EXPECTED_CACHE_CHANGED, DESCRIPTION_CHANGED, LOCATION_CHANGED} from './actionsTypes'
 import { BASEURL, headers } from '../config/config'
 import { TJob } from '../types/types'
+
+export const descriptionChange = (e: any) => ({
+    type: DESCRIPTION_CHANGED,
+    payload: e.target.value
+})
+
+export const locationChanged = (e: any) => ({
+    type: LOCATION_CHANGED,
+    payload: e.target.value
+})
 
 export const jobsChanged = (jobs: TJob[])  => ({
     type: JOBS_CHANGED,
@@ -33,6 +44,17 @@ export const updateEndJobs = () => ({
 export const updadeValueExpectedCache = () => ({
     type: VALUE_EXPECTED_CACHE_CHANGED
 })
+
+export const search = (jobDescription: string = "", location: string = "") => {
+    return (dispatch: any) => {
+        fetch(`${BASEURL}positions.json?description=${jobDescription}&location=${location}`
+            , {headers, mode: "cors"})
+            .then(res => res.json())
+            .then((jobs: TJob[]) => dispatch(jobsChanged(jobs)))
+            .then(() => dispatch(updateEndAndStart()))
+            .catch(() => {throw new Error("Error Fetch Jobs Initial!")} )
+    }
+}
 
 export const fetchJobs = (page: number) => {
     return (dispatch: any) => {
