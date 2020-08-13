@@ -1,11 +1,22 @@
 export type TGithubJob = {
+        jobsVisible: TJob[], 
+        jobsCache: TJob[], 
+        start: number, 
+        end: number, 
+        page: number, 
+        endJobs: boolean,
+        valueExpectedCache: number
+}
+
+export type TStateGithubJob = {
     githubjobs: {
         jobsVisible: TJob[], 
         jobsCache: TJob[], 
         start: number, 
         end: number, 
         page: number, 
-        endJobs: boolean
+        endJobs: boolean,
+        valueExpectedCache: number
     }
 }
 
@@ -36,5 +47,5 @@ export type TJob = {
 
 export type TAction = {
     type: string,
-    payload: string
+    payload: any
 }

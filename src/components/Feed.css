@@ -1,7 +1,7 @@
 .App-JobOpportunity-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 900px;
     height: auto;
     min-height: 450px;
