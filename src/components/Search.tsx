@@ -4,7 +4,8 @@ import { GoLocation } from 'react-icons/go'
 import { bindActionCreators } from 'redux'
 import { connect, ConnectedProps } from 'react-redux'
 
-import {search, descriptionChange, locationChanged} from '../redux/actions'
+import {search, descriptionChange, locationChanged, clearJobsCache, clearJobsVisible,
+    resettingStartEndValues} from '../redux/actions'
 import { TStateGithubJob, TProps } from '../types/types'
 import './Search.css'
 
@@ -12,6 +13,14 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & TProps
 
 class Search extends Component<Props> {
+
+    handleClickSearch() {
+        const { jobDescription, location, search, resettingStartEndValues, clearJobsCache, clearJobsVisible} = this.props
+        clearJobsVisible()
+        clearJobsCache()
+        resettingStartEndValues()
+        search(jobDescription, location)
+    }
 
     render() {
         const { jobDescription, location, descriptionChange, locationChanged } = this.props
@@ -32,7 +41,7 @@ class Search extends Component<Props> {
                         placeholder="Filtrer by city, state, zip code or country" value={location}/>
                         <label className="label-name" htmlFor="Location">Location</label>
                     </div>
-                    <button onClick={() => search()}>Search</button>
+                    <button onClick={() => this.handleClickSearch()}>Search</button>
                 </div>
             </div>
         )
@@ -51,7 +60,8 @@ const mapStateToProps = (state: TStateGithubJob ) => ({
     location: state.githubjobs.location
 })
 const mapDispatchToProps = (dispatch: any) => 
-    bindActionCreators({ descriptionChange, locationChanged, search }, dispatch)
+    bindActionCreators({ descriptionChange, locationChanged, search, clearJobsCache, clearJobsVisible, 
+        resettingStartEndValues}, dispatch)
 const connector = connect(mapStateToProps, mapDispatchToProps)
 
 export default connector(Search)

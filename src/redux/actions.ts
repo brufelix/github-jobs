@@ -1,6 +1,6 @@
-import { JOBS_CHANGED, START_AND_END_CHANGED, 
+import { JOBS_CHANGED, START_AND_END_CHANGED, CLEAR_JOBS_VISIBLE, RESETTING_START_AND_END_VALUES,
     UPDATE_VISIBLE_JOBS, PAGE_CHANGED, UPDATE_END_JOBS, JOBS_CACHE_CHANGED, 
-    VALUE_EXPECTED_CACHE_CHANGED, DESCRIPTION_CHANGED, LOCATION_CHANGED} from './actionsTypes'
+    VALUE_EXPECTED_CACHE_CHANGED, DESCRIPTION_CHANGED, LOCATION_CHANGED, CLEAR_JOBS_CACHE} from './actionsTypes'
 import { BASEURL, headers } from '../config/config'
 import { TJob } from '../types/types'
 
@@ -19,9 +19,17 @@ export const jobsChanged = (jobs: TJob[])  => ({
     payload: jobs
 })
 
+export const clearJobsVisible = () => ({
+    type: CLEAR_JOBS_VISIBLE
+})
+
 export const jobsCacheChanged = (jobsCache: TJob[])  => ({
     type: JOBS_CACHE_CHANGED,
     payload: jobsCache
+})
+
+export const clearJobsCache = () => ({
+    type: CLEAR_JOBS_CACHE
 })
 
 export const updateJobsVisible = (jobsCache: TJob[]) => ({
@@ -32,6 +40,10 @@ export const updateJobsVisible = (jobsCache: TJob[]) => ({
 export const updateEndAndStart = () => ({
     type: START_AND_END_CHANGED,   
 })
+
+export const resettingStartEndValues = () =>({
+    type: RESETTING_START_AND_END_VALUES
+}) 
 
 export const updatePage = () => ({
     type: PAGE_CHANGED
@@ -52,7 +64,7 @@ export const search = (jobDescription: string = "", location: string = "") => {
             .then(res => res.json())
             .then((jobs: TJob[]) => dispatch(jobsChanged(jobs)))
             .then(() => dispatch(updateEndAndStart()))
-            .catch(() => {throw new Error("Error Fetch Jobs Initial!")} )
+            .catch(() => {throw new Error("Error Fetch Jobs!")} )
     }
 }
 
