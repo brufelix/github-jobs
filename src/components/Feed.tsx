@@ -18,31 +18,35 @@ class Feed extends Component<Props> {
     }
 
     async getMoreJobs() {
-        const { jobsVisible, jobsCache, page, valueExpectedCache, allJobs, updatePage, updateJobsVisible, 
+        const { jobsVisible, jobsCache, page, valueExpectedCache, allJobs, updateEndJobs, updatePage, updateJobsVisible, 
             updateEndAndStart, fetchJobsCache, updadeValueExpectedCache } = this.props
         
         if (allJobs) {
-            updatePage()
-            fetchJobsCache(page)
-        }
-        
-        if (jobsVisible.length < jobsCache.length) {
             if (jobsCache.length === valueExpectedCache) {
                 updadeValueExpectedCache()
                 fetchJobsCache(page)
                 updatePage()
             }
-            updateJobsVisible(jobsCache)
-            updateEndAndStart()
+            if (jobsCache.length !== valueExpectedCache) updateEndJobs()
+        } else {
+            if (jobsVisible.length < jobsCache.length) {
+                if (jobsCache.length === valueExpectedCache) {
+                    updadeValueExpectedCache()
+                    fetchJobsCache(page)
+                    updatePage()
+                }
+                updateJobsVisible(jobsCache)
+                updateEndAndStart()
+                if ( jobsVisible.length + 9 > jobsCache.length ) updateEndJobs()
+            }
         }
     }
 
     componentDidUpdate(){
         const { fetchJobsCache, jobsCache, allJobs, page } = this.props
-        if (allJobs && jobsCache.length === 0) {
+        if (allJobs && jobsCache.length === 0){
             fetchJobsCache(page)
         }
-
     }
 
     componentDidMount() {
@@ -53,13 +57,13 @@ class Feed extends Component<Props> {
     }
 
     render(){
-        const { jobsVisible, jobsCache, endJobs, allJobs} = this.props
+        const { jobsVisible, jobsCache, endJobs, allJobs, valueExpectedCache} = this.props
         
         return (
             <React.StrictMode>
                 <h2 className="Title-feed">Newly Added Jobs</h2>
                 <div className="App-JobOpportunity-container">
-                    {!allJobs &&jobsVisible.map((job: TJobCard, index: number) => 
+                    {!allJobs && jobsVisible.map((job: TJobCard, index: number) => 
                         <JobCard company={job.company} created_at={job.created_at} location={job.location} 
                         title={job.title} type={job.type} key={index}/>)}
                     {allJobs && jobsCache.map((job: TJobCard, index: number) => 

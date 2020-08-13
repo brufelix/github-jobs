@@ -2,7 +2,7 @@ import { TAction, TGithubJob } from '../types/types'
 import { JOBS_CHANGED, START_AND_END_CHANGED, CLEAR_JOBS_VISIBLE, RESETTING_START_AND_END_VALUES,
     UPDATE_VISIBLE_JOBS, PAGE_CHANGED, UPDATE_END_JOBS, JOBS_CACHE_CHANGED, VALUE_EXPECTED_CACHE_CHANGED,
     DESCRIPTION_CHANGED, LOCATION_CHANGED, CLEAR_JOBS_CACHE } from './actionsTypes'
-const INITIAL_STATE: TGithubJob = { jobsVisible: [], jobsCache: [], start: 0, end: 10, 
+const INITIAL_STATE: TGithubJob = { jobsVisible: [], jobsCache: [], start: 0, end: 9, 
     page: 1, endJobs: false, valueExpectedCache: 50, jobDescription: "", location: ""}
 
 export default (state = INITIAL_STATE, action: TAction) => {
@@ -26,7 +26,7 @@ export default (state = INITIAL_STATE, action: TAction) => {
             return { ...state, jobsVisible: [] }
 
         case START_AND_END_CHANGED: 
-            return { ...state, start: state.start + 10, end: state.end + 10 }
+            return { ...state, start: state.start + 9, end: state.end + 9 }
         
         case RESETTING_START_AND_END_VALUES: 
             return {...state, start: 0, end: 10}

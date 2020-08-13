@@ -1,4 +1,4 @@
-import React, { Component, ReactHTMLElement } from 'react'
+import React, { Component } from 'react'
 import {FaSearch } from 'react-icons/fa'
 import { GoLocation } from 'react-icons/go'
 import { bindActionCreators } from 'redux'

@@ -5,14 +5,13 @@ import './JobCard.css'
 export default (props: TJobCard) => {
     return (
         <div className="Box-JobCard">
-            <div className="title">{props.title}</div>
-            <div className="Subtitle-Times">
-                <div className="time">{`${props.created_at}`}</div>
-                <div className="full-time">{props.type}</div>
+            <div className="Title">{props.title}</div>
+            <div className="Created-at-Type">
+                <div className="Created-at">{`${props.created_at}`}</div>
+                <div className="Type">{props.type}</div>
             </div>
-            <div className="location">{props.location}</div>
-            <div id="requirements">NodeJs, ReactJs, Css</div>
-            <div id="nameComporation">{props.company}</div>
+            <div className="Location">{props.location}</div>
+            <div id="company">{props.company}</div>
             <button id="apply-button">Apply Now</button>
         </div>
     )
