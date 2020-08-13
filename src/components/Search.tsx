@@ -15,7 +15,6 @@ type Props = PropsFromRedux & TPropsSearch
 class Search extends Component<Props> {
 
     keyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const { jobDescription, location } = this.props
         if (e.key === 'Enter'){
             this.handleClickSearch()
         }
