@@ -6,9 +6,7 @@ import Footer from './components/Footer'
 import './App.css'
 
 function App() {
-
   const [allJobs, setAllJobs] =  useState<boolean>(false)
-
   return (
     <React.StrictMode>
       <div className="App">

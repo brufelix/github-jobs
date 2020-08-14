@@ -7,7 +7,9 @@ export type TGithubJob = {
         endJobs: boolean,
         valueExpectedCache: number,
         jobDescription: string,
-        location: string
+        location: string,
+        currentDescription: string,
+        currentLocation: string
 }
 
 export type TStateGithubJob = {
@@ -20,7 +22,9 @@ export type TStateGithubJob = {
         endJobs: boolean,
         valueExpectedCache: number,
         jobDescription: string,
-        location: string
+        location: string,
+        currentDescription: "", 
+        currentLocation: ""
     }
 }
 

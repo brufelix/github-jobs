@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import { bindActionCreators } from 'redux'
 import { connect, ConnectedProps } from 'react-redux'
 
-import { fetchJobs, fetchJobsCache, updateEndAndStart, updateJobsVisible, 
-    updatePage, updateEndJobs, jobsCacheChanged, updadeValueExpectedCache, clearJobsCache, clearJobsVisible } from '../redux/actions'
+import { fetchJobs, fetchJobsCache, updateEndAndStart, updateJobsVisible, clearState,
+    updatePage, updateEndJobs, jobsCacheChanged, updadeValueExpectedCache, clearJobsCache, clearJobsVisible, 
+    searchCache} from '../redux/actions'
 import { TJobCard, TStateGithubJob, TPropsFeed } from '../types/types'
 import JobCard from './JobCard'
 import './Feed.css'
@@ -18,8 +19,9 @@ class Feed extends Component<Props> {
     }
 
     async getMoreJobs() {
-        const { jobsVisible, jobsCache, page, valueExpectedCache, allJobs, updateEndJobs, updatePage, updateJobsVisible, 
-            updateEndAndStart, fetchJobsCache, updadeValueExpectedCache } = this.props
+        const { jobsVisible, jobsCache, page, valueExpectedCache, allJobs,
+            currentDescription, currentLocation, updateEndJobs, updatePage, updateJobsVisible, updateEndAndStart, 
+            fetchJobsCache,  updadeValueExpectedCache, searchCache, clearJobsCache } = this.props
         
         if (allJobs) {
             if (jobsCache.length === valueExpectedCache) {
@@ -28,6 +30,20 @@ class Feed extends Component<Props> {
                 updatePage()
             }
             if (jobsCache.length !== valueExpectedCache) updateEndJobs()
+
+        } else if (currentDescription.trim() || currentLocation.trim()) {
+            if (jobsCache.length === valueExpectedCache){
+                searchCache(page, currentDescription, currentLocation)
+                updadeValueExpectedCache()
+                updatePage()
+            }
+            updateJobsVisible(jobsCache)
+            updateEndAndStart()
+            if ( jobsVisible.length + 9 > jobsCache.length ){
+                updateEndJobs()
+                clearJobsCache()  
+            } 
+
         } else {
             if (jobsVisible.length < jobsCache.length) {
                 if (jobsCache.length === valueExpectedCache) {
@@ -37,14 +53,18 @@ class Feed extends Component<Props> {
                 }
                 updateJobsVisible(jobsCache)
                 updateEndAndStart()
-                if ( jobsVisible.length + 9 > jobsCache.length ) updateEndJobs()
+                if ( jobsVisible.length + 9 > jobsCache.length ) {
+                    updateEndJobs()
+                    clearJobsCache() 
+                }
             }
         }
     }
 
     componentDidUpdate(){
-        const { fetchJobsCache, jobsCache, allJobs, page } = this.props
+        const { fetchJobsCache, updateEndJobs,jobsCache, allJobs, page } = this.props
         if (allJobs && jobsCache.length === 0){
+            updateEndJobs(false)
             fetchJobsCache(page)
         }
     }
@@ -57,7 +77,7 @@ class Feed extends Component<Props> {
     }
 
     render(){
-        const { jobsVisible, jobsCache, endJobs, allJobs, valueExpectedCache} = this.props
+        const { jobsVisible, jobsCache, endJobs, allJobs } = this.props
         
         return (
             <React.StrictMode>
@@ -86,11 +106,15 @@ const mapStateToProps = (state: TStateGithubJob ) => ({
     end: state.githubjobs.end, 
     page: state.githubjobs.page, 
     endJobs: state.githubjobs.endJobs,
-    valueExpectedCache: state.githubjobs.valueExpectedCache
+    valueExpectedCache: state.githubjobs.valueExpectedCache,
+    jobDescription: state.githubjobs.jobDescription,
+    location: state.githubjobs.location,
+    currentDescription: state.githubjobs.currentDescription, 
+    currentLocation: state.githubjobs.currentLocation
 })
 const mapDispatchToProps = (dispatch: any) => 
-    bindActionCreators({ fetchJobs, fetchJobsCache, updateEndAndStart, clearJobsCache, clearJobsVisible,
-        updateJobsVisible, updatePage, updateEndJobs, jobsCacheChanged, updadeValueExpectedCache}, dispatch)
+    bindActionCreators({ fetchJobs, fetchJobsCache, updateEndAndStart, clearJobsCache, clearJobsVisible, clearState,
+        updateJobsVisible, updatePage, updateEndJobs, jobsCacheChanged, updadeValueExpectedCache, searchCache}, dispatch)
 const connector = connect(mapStateToProps, mapDispatchToProps)
 
 export default connector(Feed)

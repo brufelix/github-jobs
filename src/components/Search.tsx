@@ -4,9 +4,9 @@ import { GoLocation } from 'react-icons/go'
 import { bindActionCreators } from 'redux'
 import { connect, ConnectedProps } from 'react-redux'
 
-import {search, descriptionChange, locationChanged, clearJobsCache, clearJobsVisible,
-    resettingStartEndValues} from '../redux/actions'
-import { TStateGithubJob, TPropsSearch } from '../types/types'
+import {search, descriptionChange, locationChanged, clearJobsCache, clearJobsVisible, clearValuleExpectedCache, clearState,
+    resettingStartEndValues, searchCache, updatePage,  clearCurrentDescriptionLocation, initializePages, updateEndJobs } from '../redux/actions'
+import { TStateGithubJob, TPropsSearch} from '../types/types'
 import './Search.css'
 
 type PropsFromRedux = ConnectedProps<typeof connector>
@@ -21,13 +21,20 @@ class Search extends Component<Props> {
     }
 
     handleClickSearch() {
-        const { jobDescription, location, search, resettingStartEndValues, clearJobsCache, 
-            clearJobsVisible, setAllJobs} = this.props
+        const { jobDescription, location, page, search, resettingStartEndValues, clearJobsCache, 
+            clearValuleExpectedCache, clearJobsVisible, setAllJobs, searchCache, updatePage, clearCurrentDescriptionLocation, 
+            initializePages, updateEndJobs} = this.props
         setAllJobs(false)
+        initializePages()
         clearJobsVisible()
         clearJobsCache()
         resettingStartEndValues()
+        updateEndJobs(false)
+        clearCurrentDescriptionLocation()
+        clearValuleExpectedCache()
         search(jobDescription, location)
+        searchCache(page, jobDescription, location)
+        updatePage()
     }
 
     render() {
@@ -68,8 +75,8 @@ const mapStateToProps = (state: TStateGithubJob ) => ({
     location: state.githubjobs.location
 })
 const mapDispatchToProps = (dispatch: any) => 
-    bindActionCreators({ descriptionChange, locationChanged, search, clearJobsCache, clearJobsVisible, 
-        resettingStartEndValues}, dispatch)
+    bindActionCreators({ descriptionChange, locationChanged, search, clearJobsCache, clearJobsVisible, initializePages,clearState,
+        resettingStartEndValues, searchCache, updatePage, clearCurrentDescriptionLocation, clearValuleExpectedCache, updateEndJobs}, dispatch)
 const connector = connect(mapStateToProps, mapDispatchToProps)
 
 export default connector(Search)
