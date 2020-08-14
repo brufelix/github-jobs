@@ -1,0 +1,47 @@
+#page {
+    margin-top: 80px;
+    min-height: 480px;
+    margin: 20px 230px 50px 230px;
+    border: solid 1px gray;
+    background-color: white;
+}
+
+#img {
+    width: 250px;
+    height: 200px;
+}
+
+.note {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.value {
+    font-size: 40px;
+    color: rgb(0, 0, 58);
+}
+
+.text-card {
+    margin-top: 77px;
+}
+
+.text-listing {
+    margin-bottom: 40px;
+}
+
+ol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0;
+}
+
+ol li {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    float: left;
+    margin: 0;
+    width: 250px;
+    text-align: center;
+}
