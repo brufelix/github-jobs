@@ -15,7 +15,7 @@ export default () => {
             </p>
             <ol>
                 <li>
-                    <img id="img" src={img01} />
+                    <img id="img" src={img01} alt="img"/>
                     <h3>Create and preview your listing</h3>
                     <p>
                         See exactly how your listing will look before you publish live. 
@@ -35,7 +35,7 @@ export default () => {
                 </li>
                     <FaArrowCircleRight style={{ fontSize: "50px", marginRight: "10px", marginBottom: "80px"}}/>
                 <li>
-                    <img id="img" src={img02} />
+                    <img id="img" src={img02} alt="img"/>
                     <h3 >Your listing goes live immediately</h3>
                     <p className="text-listing">
                         Listings are live for 30 days. 

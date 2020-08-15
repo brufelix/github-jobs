@@ -6,8 +6,9 @@ CLEAR_CURRENT_JOBS_DESCRIPTION_LOCATION, CLEAR_STATE, IS_SEARCH_CHANGED, FETCH_J
 import { BASEURL, headers } from '../config/config'
 import { TJob } from '../types/types'
 
-export const updateIsSearch = () => ({
-    type: IS_SEARCH_CHANGED
+export const updateIsSearch = (boolean: boolean = false) => ({
+    type: IS_SEARCH_CHANGED,
+    payload: boolean
 })
 
 export const descriptionChange = (e: any) => ({
@@ -112,7 +113,6 @@ export const searchCache = (page: number, jobDescription: string = "", location:
             , {headers, mode: "cors"})
             .then(res => res.json())
             .then((jobs: TJob[]) => dispatch(jobsCacheChanged(jobs)))
-            .then(() => dispatch(updatePage()))
             .catch(() => {throw new Error("Error Fetch Jobs!")} )
     }
 }

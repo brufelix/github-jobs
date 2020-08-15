@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import { bindActionCreators } from 'redux'
 import { connect, ConnectedProps } from 'react-redux'
-
+import Search from './Search'
 import { updateEndAndStart, updateJobsVisible, updatePage, updateEndJobs, updadeValueExpectedCache,  searchCache, 
-    fetchInitJobs} from '../redux/actions'
+    fetchInitJobs, updateIsSearch} from '../redux/actions'
 import { TJobCard, TStateGithubJob, TPropsFeed } from '../types/types'
 import JobCard from './JobCard'
 import './Feed.css'
@@ -31,15 +31,25 @@ class Feed extends Component<Props> {
             updateEndAndStart()
         }
 
-        if (end > jobsCache.length) updateEndJobs(true)
+        if (end > jobsCache.length) {
+            updateEndJobs(true)
+        }
+    }
+
+    componentDidUpdate() {
+        const { isSearch, end, jobsCache, updateIsSearch, updateEndJobs } = this.props
+        if (isSearch && end < jobsCache.length) {
+            updateEndJobs(false)
+            updateIsSearch(false)
+        }
     }
 
     componentDidMount() {
-        const { isSearch, jobsCache, fetchInitJobs, updateEndJobs } = this.props
+        const { isSearch, end, jobsCache, fetchInitJobs, updateEndJobs } = this.props
         if (!isSearch) {
             fetchInitJobs()
         }
-        if (jobsCache.length === 0) updateEndJobs(true)
+        if (end > jobsCache.length) updateEndJobs(true)
     }
 
     render(){
@@ -47,6 +57,7 @@ class Feed extends Component<Props> {
         
         return (
             <React.StrictMode>
+                <Search/>
                 <h2 className="Title-feed">Newly Added Jobs</h2>
                 <div className="App-JobOpportunity-container">
                     {!allJobs && jobsVisible.map((job: TJobCard, index: number) => 
@@ -78,7 +89,7 @@ const mapStateToProps = (state: TStateGithubJob ) => ({
 })
 const mapDispatchToProps = (dispatch: any) => 
     bindActionCreators({ updateEndAndStart, updateJobsVisible, updatePage, updateEndJobs, updadeValueExpectedCache, searchCache, 
-        fetchInitJobs }, dispatch)
+        fetchInitJobs, updateIsSearch }, dispatch)
 const connector = connect(mapStateToProps, mapDispatchToProps)
 
 export default connector(Feed)

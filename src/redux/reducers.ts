@@ -68,7 +68,7 @@ export default (state = INITIAL_STATE, action: TAction) => {
         case CLEAR_STATE:
             return { ...state } 
         case IS_SEARCH_CHANGED: 
-                return {...state, isSearch: !state.isSearch}
+                return {...state, isSearch: action.payload}
         default:
             return state
     }

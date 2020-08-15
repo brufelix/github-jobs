@@ -47,12 +47,6 @@ export type TPropsSearch = {
     start: number, 
     end: number, 
     page: number,
-    setAllJobs(boolean: boolean): void
-}
-
-export type TPropsHeader = {
-    setAllJobs(boolean: boolean): void
-    allJobs: boolean
 }
 
 export type TJobCard = {

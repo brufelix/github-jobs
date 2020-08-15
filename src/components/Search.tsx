@@ -22,40 +22,46 @@ class Search extends Component<Props> {
     }
 
     handleClickSearch() {
-        const { jobDescription, location, page, search, resettingStartEndValues, clearJobsCache, 
-            clearValuleExpectedCache, clearJobsVisible, setAllJobs, searchCache, updatePage, clearCurrentDescriptionLocation, 
-            initializePages, updateIsSearch, updateEndJobs, clearState, currentJobsDescriptionChanged, currentLocationChanged} = this.props
+        const { jobDescription, location, page, search, resettingStartEndValues, clearJobsCache, clearJobsVisible, searchCache, 
+            initializePages, updateIsSearch, updatePage, clearValuleExpectedCache} = this.props
+            
             clearJobsVisible()
             clearJobsCache()
             resettingStartEndValues()
-            updateIsSearch()
+            clearValuleExpectedCache()
+            updateIsSearch(true)
+            initializePages()
             search(jobDescription, location)
             searchCache(page, jobDescription, location)
-            updateEndJobs(false)
-    }
+            updateIsSearch(true)
+            updatePage()
+        }
+
 
     render() {
         const { jobDescription, location, descriptionChange, locationChanged } = this.props
 
         return(
-            <div className="App-search">
-                <div className="search-field-containes">
-                    <div className="box">
-                        <FaSearch style={{marginRight: "15px", marginLeft: "5px"}}/>
-                        <input name="Job Description" type="text" onChange={descriptionChange} onKeyUp={this.keyHandler}
-                            placeholder="Filter by title, benefits, companies, expertise" value={jobDescription}/> 
-                        <label htmlFor="Job Description" className="label-name">Job Description</label>
+            <React.StrictMode>
+                <div className="App-search">
+                    <div className="search-field-containes">
+                        <div className="box">
+                            <FaSearch style={{marginRight: "15px", marginLeft: "5px"}}/>
+                            <input name="Job Description" type="text" onChange={descriptionChange} onKeyUp={this.keyHandler}
+                                placeholder="Filter by title, benefits, companies, expertise" value={jobDescription}/> 
+                            <label htmlFor="Job Description" className="label-name">Job Description</label>
+                        </div>
+                        |  
+                        <div className="box">
+                            <GoLocation style={{marginRight: "15px", marginLeft: "12px"}}/>
+                            <input name="Location" type="text" onChange={locationChanged} onKeyUp={this.keyHandler}
+                                placeholder="Filtrer by city, state, zip code or country" value={location}/>
+                            <label className="label-name" htmlFor="Location">Location</label>
+                        </div>
+                        <button onClick={() => this.handleClickSearch()}>Search</button>
                     </div>
-                    |  
-                    <div className="box">
-                        <GoLocation style={{marginRight: "15px", marginLeft: "12px"}}/>
-                        <input name="Location" type="text" onChange={locationChanged} onKeyUp={this.keyHandler}
-                            placeholder="Filtrer by city, state, zip code or country" value={location}/>
-                        <label className="label-name" htmlFor="Location">Location</label>
-                    </div>
-                    <button onClick={() => this.handleClickSearch()}>Search</button>
                 </div>
-            </div>
+            </React.StrictMode>
         )
     }
 }

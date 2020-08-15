@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { bindActionCreators } from 'redux'
 import { connect, ConnectedProps } from 'react-redux'
-
+import Search from './Search'
 import { fetchJobs, fetchJobsCache, updateEndAndStart, updateJobsVisible,
     updatePage, updateEndJobs, updadeValueExpectedCache } from '../redux/actions'
 import { TJobCard, TStateGithubJob, TPropsFeed } from '../types/types'
@@ -44,6 +44,7 @@ class Feed extends Component<Props> {
         
         return (
             <React.StrictMode>
+                <Search />
                 <h2 className="Title-feed">Newly Added Jobs</h2>
                 <div className="App-JobOpportunity-container">
                     {jobsVisible.map((job: TJobCard, index: number) => 
