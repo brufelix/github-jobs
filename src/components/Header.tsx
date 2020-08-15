@@ -10,13 +10,13 @@ export default (props: TPropsHeader) => {
                 </h2>
                 <ul>
                     <li>
-                         <a onClick={() => props.allJobs ? "" : props.setAllJobs(true)}>All jobs</a>
+                         <a href="/positions" onClick={() => props.allJobs ? "" : props.setAllJobs(true)}>All jobs</a>
                     </li>
                     <li>
                         <a href="/">Post a job</a>
                     </li>
                     <li>
-                        <a href="/">How it Works</a>
+                        <a href="/faq">How it Works</a>
                     </li>
                 </ul>
             </nav>
