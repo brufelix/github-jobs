@@ -1,9 +1,14 @@
 import { JOBS_CHANGED, START_AND_END_CHANGED, CLEAR_JOBS_VISIBLE, RESETTING_START_AND_END_VALUES,
     UPDATE_VISIBLE_JOBS, PAGE_CHANGED, UPDATE_END_JOBS, JOBS_CACHE_CHANGED, CLEAR_VALUE_EXPECTED_CACHE,
     VALUE_EXPECTED_CACHE_CHANGED, DESCRIPTION_CHANGED, LOCATION_CHANGED, CLEAR_JOBS_CACHE, INITIALIZE_PAGES,
-CURRENT_JOBS_DESCRIPTION_CHANGED, CURRENT_JOBS_LOCATION_CHANGED, CLEAR_CURRENT_JOBS_DESCRIPTION_LOCATION, CLEAR_STATE} from './actionsTypes'
+CURRENT_JOBS_DESCRIPTION_CHANGED, CURRENT_JOBS_LOCATION_CHANGED, 
+CLEAR_CURRENT_JOBS_DESCRIPTION_LOCATION, CLEAR_STATE, IS_SEARCH_CHANGED, FETCH_JOBS_INITIAL} from './actionsTypes'
 import { BASEURL, headers } from '../config/config'
 import { TJob } from '../types/types'
+
+export const updateIsSearch = () => ({
+    type: IS_SEARCH_CHANGED
+})
 
 export const descriptionChange = (e: any) => ({
     type: DESCRIPTION_CHANGED,
@@ -17,6 +22,11 @@ export const locationChanged = (e: any) => ({
 
 export const jobsChanged = (jobs: TJob[])  => ({
     type: JOBS_CHANGED,
+    payload: jobs
+})
+
+export const fetchJobsInitial = (jobs: TJob[])  => ({
+    type: FETCH_JOBS_INITIAL,
     payload: jobs
 })
 
@@ -91,9 +101,7 @@ export const search = (jobDescription: string = "", location: string = "") => {
             , {headers, mode: "cors"})
             .then(res => res.json())
             .then((jobs: TJob[]) => dispatch(jobsChanged(jobs)))
-            .then(() => dispatch(currentJobsDescriptionChanged(jobDescription)))
-            .then(() => dispatch(currentLocationChanged(location)))
-            .then(() => dispatch(updateEndAndStart()))
+            .then(() =>  dispatch(updateEndAndStart()))
             .catch(() => {throw new Error("Error Fetch Jobs!")} )
     }
 }
@@ -104,7 +112,17 @@ export const searchCache = (page: number, jobDescription: string = "", location:
             , {headers, mode: "cors"})
             .then(res => res.json())
             .then((jobs: TJob[]) => dispatch(jobsCacheChanged(jobs)))
+            .then(() => dispatch(updatePage()))
             .catch(() => {throw new Error("Error Fetch Jobs!")} )
+    }
+}
+
+export const fetchInitJobs = () => {
+    return (dispatch: any) => {
+        fetch(`${BASEURL}positions.json?page=1`, {headers, mode: "cors"})
+        .then(res =>  res.json())
+        .then((jobs: TJob[]) =>  dispatch(fetchJobsInitial(jobs)))
+        .catch(() => { throw new Error("Error Fetch Initial Jobs!") })
     }
 }
 

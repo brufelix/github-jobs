@@ -9,7 +9,8 @@ export type TGithubJob = {
         jobDescription: string,
         location: string,
         currentDescription: string,
-        currentLocation: string
+        currentLocation: string,
+        isSearch: boolean
 }
 
 export type TStateGithubJob = {
@@ -24,7 +25,8 @@ export type TStateGithubJob = {
         jobDescription: string,
         location: string,
         currentDescription: "", 
-        currentLocation: ""
+        currentLocation: "",
+        isSearch: boolean
     }
 }
 

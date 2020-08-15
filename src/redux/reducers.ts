@@ -2,13 +2,17 @@ import { TAction, TGithubJob } from '../types/types'
 import { JOBS_CHANGED, START_AND_END_CHANGED, CLEAR_JOBS_VISIBLE, RESETTING_START_AND_END_VALUES,
     UPDATE_VISIBLE_JOBS, PAGE_CHANGED, UPDATE_END_JOBS, JOBS_CACHE_CHANGED, VALUE_EXPECTED_CACHE_CHANGED,
     DESCRIPTION_CHANGED, LOCATION_CHANGED, CLEAR_JOBS_CACHE, CURRENT_JOBS_DESCRIPTION_CHANGED, INITIALIZE_PAGES,
-    CURRENT_JOBS_LOCATION_CHANGED, CLEAR_CURRENT_JOBS_DESCRIPTION_LOCATION, CLEAR_VALUE_EXPECTED_CACHE, CLEAR_STATE } from './actionsTypes'
+    CURRENT_JOBS_LOCATION_CHANGED, CLEAR_CURRENT_JOBS_DESCRIPTION_LOCATION, 
+    CLEAR_VALUE_EXPECTED_CACHE, CLEAR_STATE, IS_SEARCH_CHANGED, FETCH_JOBS_INITIAL } from './actionsTypes'
 const INITIAL_STATE: TGithubJob = { jobsVisible: [], jobsCache: [], start: 0, end: 9, 
     page: 1, endJobs: false, valueExpectedCache: 50, jobDescription: "", location: "", 
-    currentDescription: "", currentLocation: ""}
+    currentDescription: "", currentLocation: "", isSearch: false}
 
 export default (state = INITIAL_STATE, action: TAction) => {
     switch(action.type) {
+        case FETCH_JOBS_INITIAL:
+            return { ...state, jobsVisible: action.payload.slice(0, 3)}
+
         case DESCRIPTION_CHANGED:
             return {...state, jobDescription: action.payload }
         
@@ -63,7 +67,8 @@ export default (state = INITIAL_STATE, action: TAction) => {
         
         case CLEAR_STATE:
             return { ...state } 
-        
+        case IS_SEARCH_CHANGED: 
+                return {...state, isSearch: !state.isSearch}
         default:
             return state
     }
