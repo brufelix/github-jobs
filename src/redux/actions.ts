@@ -97,7 +97,8 @@ export const searchCache = (page: number, jobDescription: string = "", location:
         fetch(`${BASEURL}positions.json?description=${jobDescription}&location=${location}&page=${page}`
             , {headers, mode: "cors"})
             .then(res => res.json())
-            .then((jobs: TJob[]) => dispatch(jobsCacheChanged(jobs)))
+            .then((jobs: TJob[]) => dispatch(
+                jobs.length > 9 ? jobsCacheChanged(jobs) : updateJobsVisible(jobs)))
             .then(() => dispatch(updatePage()))
             .catch(() => {throw new Error("Error search cache!")} )
     }

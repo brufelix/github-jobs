@@ -6,6 +6,7 @@ import AllJobs from './components/AllJobs/'
 import HowItWorks from './components/HowItWorks/'
 import Footer from './components/Footer/'
 import PageJob from './components/JobInformation/'
+import DocAPI from './components/DocApi/'
 import './App.css'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
               <Route path="/positions" component={AllJobs}/>
               <Route path="/faq" component={HowItWorks}/>
               <Route path="/job" component={PageJob}/>
+              <Route path="/api" component={DocAPI}/>
               <Redirect from="*" to="/" />
           </Switch>
         <Footer />

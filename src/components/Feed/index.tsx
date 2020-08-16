@@ -22,7 +22,6 @@ class Feed extends Component<Props> {
             updateEndJobs,  updateJobsVisible, updateEndAndStart,  updadeValueExpectedCache, searchCache } = this.props
             
         if ( jobsCache.length === valueExpectedCache ) {
-            console.log(page)
             searchCache(page, jobDescription, location)
             updadeValueExpectedCache()
         }
@@ -45,7 +44,7 @@ class Feed extends Component<Props> {
             updateEndAndStart()
             updateEndJobs(false)
             updateIsSearch(false)
-        }
+        } 
     }
 
     componentDidMount() {

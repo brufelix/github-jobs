@@ -10,7 +10,7 @@ export default () => {
                 <li><a id="a" href="/">Contact</a></li>
                 <li><a id="a" href="/">Privacy</a></li>
                 <li><a id="a" href="/">Terms</a></li>
-                <li><a id="a" href="/">API</a></li>
+                <li><a id="a" href="/api">API</a></li>
             </ul>
             <img src={Img} alt="GitHub"/>
             <p>© 2020 GitHub Inc. All rights reserved.</p>

@@ -5,7 +5,6 @@ import { connect, ConnectedProps } from 'react-redux'
 
 import mapStateToProps from './mapStateToProps'
 import mapDispatchToProps from './mapDispatchToProps'
-
 import { TPropsSearch} from '../../types/types'
 import './Search.css'
 
