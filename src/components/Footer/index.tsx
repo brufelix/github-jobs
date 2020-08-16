@@ -1,5 +1,5 @@
 import React from 'react'
-import Img from '../img/github.png'
+import Img from '../../img/github.png'
 import './Footer.css'
 
 export default () => {

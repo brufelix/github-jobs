@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
-import { bindActionCreators } from 'redux'
 import { connect, ConnectedProps } from 'react-redux'
-import Search from './Search'
-import { fetchJobs, fetchJobsCache, updateEndAndStart, updateJobsVisible,
-    updatePage, updateEndJobs, updadeValueExpectedCache } from '../redux/actions'
-import { TJobCard, TStateGithubJob, TPropsFeed } from '../types/types'
-import JobCard from './JobCard'
-import './Feed.css'
+import { IoMdArrowRoundBack } from 'react-icons/io'
+
+import mapStateToProps from './mapStateToProps'
+import mapDispatchToProps from './mapDispatchToProps'
+import { TJobCard, TPropsFeed } from '../../types/types'
+import JobCard from '../JobCard/'
+import './AllJobs.css'
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & TPropsFeed
@@ -17,7 +17,7 @@ class Feed extends Component<Props> {
         this.getMoreJobs.bind(this)
     }
 
-    async getMoreJobs() {
+    getMoreJobs() {
         const { jobsVisible, jobsCache, page, valueExpectedCache, end, updateEndJobs, updatePage, 
             updateJobsVisible, updateEndAndStart, fetchJobsCache, updadeValueExpectedCache } = this.props
             if (jobsVisible.length < jobsCache.length ) {
@@ -44,12 +44,17 @@ class Feed extends Component<Props> {
         
         return (
             <React.StrictMode>
-                <Search />
-                <h2 className="Title-feed">Newly Added Jobs</h2>
-                <div className="App-JobOpportunity-container">
+                <div className="search">
+                    <IoMdArrowRoundBack style={{marginRight: "3px", marginLeft: '10px',color: "#005194"}}/>
+                    <div className="left">
+                        <a className="back" href="/">Back to search</a>
+                    </div>
+                </div>
+                <h2 className="title-feed">All jobs</h2>
+                <div className="app-JobOpportunity-container">
                     {jobsVisible.map((job: TJobCard, index: number) => 
                         <JobCard company={job.company} created_at={job.created_at} location={job.location} 
-                        title={job.title} type={job.type} key={index}/>)}
+                        title={job.title} type={job.type} key={index} id={job.id} />)}
                 </div>
                 <div className="div-pagination">
                     {!endJobs &&
@@ -59,25 +64,6 @@ class Feed extends Component<Props> {
         )
     }
 }
-
-const mapStateToProps = (state: TStateGithubJob ) => ({
-    jobsVisible: state.githubjobs.jobsVisible, 
-    jobsCache: state.githubjobs.jobsCache, 
-    start: state.githubjobs.start, 
-    end: state.githubjobs.end, 
-    page: state.githubjobs.page, 
-    endJobs: state.githubjobs.endJobs,
-    valueExpectedCache: state.githubjobs.valueExpectedCache,
-    jobDescription: state.githubjobs.jobDescription,
-    location: state.githubjobs.location,
-    currentDescription: state.githubjobs.currentDescription, 
-    currentLocation: state.githubjobs.currentLocation,
-    isSearch: state.githubjobs.isSearch
-})
-
-const mapDispatchToProps = (dispatch: any) => 
-    bindActionCreators({ fetchJobs, fetchJobsCache, updateEndAndStart, updateJobsVisible, updatePage, 
-        updateEndJobs, updadeValueExpectedCache }, dispatch)
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 

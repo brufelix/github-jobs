@@ -8,9 +8,7 @@ export type TGithubJob = {
         valueExpectedCache: number,
         jobDescription: string,
         location: string,
-        currentDescription: string,
-        currentLocation: string,
-        isSearch: boolean
+        isSearch: boolean,
 }
 
 export type TStateGithubJob = {
@@ -24,9 +22,7 @@ export type TStateGithubJob = {
         valueExpectedCache: number,
         jobDescription: string,
         location: string,
-        currentDescription: "", 
-        currentLocation: "",
-        isSearch: boolean
+        isSearch: boolean,
     }
 }
 
@@ -50,6 +46,7 @@ export type TPropsSearch = {
 }
 
 export type TJobCard = {
+    id: string
     title: string
     type: string
     created_at: number
@@ -57,12 +54,21 @@ export type TJobCard = {
     company: string
 }
 
+export type TStateJobPage =  { 
+    description: string, 
+    title: string, 
+    type: string, 
+    location: string
+}
+
 export type TJob = {
+    id: string
     title: string
     type: string
     created_at: number
     location: string
     company: string
+    description: string
 }
 
 export type TAction = {

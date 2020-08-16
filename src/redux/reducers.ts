@@ -1,12 +1,10 @@
 import { TAction, TGithubJob } from '../types/types'
 import { JOBS_CHANGED, START_AND_END_CHANGED, CLEAR_JOBS_VISIBLE, RESETTING_START_AND_END_VALUES,
     UPDATE_VISIBLE_JOBS, PAGE_CHANGED, UPDATE_END_JOBS, JOBS_CACHE_CHANGED, VALUE_EXPECTED_CACHE_CHANGED,
-    DESCRIPTION_CHANGED, LOCATION_CHANGED, CLEAR_JOBS_CACHE, CURRENT_JOBS_DESCRIPTION_CHANGED, INITIALIZE_PAGES,
-    CURRENT_JOBS_LOCATION_CHANGED, CLEAR_CURRENT_JOBS_DESCRIPTION_LOCATION, 
+    DESCRIPTION_CHANGED, LOCATION_CHANGED, CLEAR_JOBS_CACHE, INITIALIZE_PAGES,
     CLEAR_VALUE_EXPECTED_CACHE, CLEAR_STATE, IS_SEARCH_CHANGED, FETCH_JOBS_INITIAL } from './actionsTypes'
-const INITIAL_STATE: TGithubJob = { jobsVisible: [], jobsCache: [], start: 0, end: 9, 
-    page: 1, endJobs: false, valueExpectedCache: 50, jobDescription: "", location: "", 
-    currentDescription: "", currentLocation: "", isSearch: false}
+const INITIAL_STATE: TGithubJob = { jobsVisible: [], jobsCache: [], start: 0, end: 9,
+    page: 1, endJobs: false, valueExpectedCache: 50, jobDescription: "", location: "", isSearch: false}
 
 export default (state = INITIAL_STATE, action: TAction) => {
     switch(action.type) {
@@ -19,21 +17,12 @@ export default (state = INITIAL_STATE, action: TAction) => {
         case LOCATION_CHANGED:
             return {...state, location: action.payload}
         
-        case CURRENT_JOBS_DESCRIPTION_CHANGED:
-            return { ...state, currentDescription: action.payload }
-
-        case CURRENT_JOBS_LOCATION_CHANGED:
-            return { ...state, currentLocation: action.payload }
-    
-        case CLEAR_CURRENT_JOBS_DESCRIPTION_LOCATION:
-            return {...state, currentLocation: "", currentDescription: ""}
-        
         case JOBS_CHANGED: 
             return {  ...state, jobsVisible: action.payload.slice(state.start, state.end)}
 
         case JOBS_CACHE_CHANGED: 
-            return { ...state, jobsCache: state.jobsCache.concat(action.payload) }
-        
+            return {...state, jobsCache: state.jobsCache.concat(...action.payload)}
+    
         case CLEAR_JOBS_CACHE:
             return { ...state, jobsCache: [] }
 
@@ -67,8 +56,10 @@ export default (state = INITIAL_STATE, action: TAction) => {
         
         case CLEAR_STATE:
             return { ...state } 
+        
         case IS_SEARCH_CHANGED: 
-                return {...state, isSearch: action.payload}
+            return {...state, isSearch: action.payload}
+        
         default:
             return state
     }

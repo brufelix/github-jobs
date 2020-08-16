@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import {FaSearch } from 'react-icons/fa'
 import { GoLocation } from 'react-icons/go'
-import { bindActionCreators } from 'redux'
 import { connect, ConnectedProps } from 'react-redux'
 
-import {search, descriptionChange, locationChanged, clearJobsCache, clearJobsVisible, clearValuleExpectedCache, clearState,
-    resettingStartEndValues, searchCache, updatePage,  clearCurrentDescriptionLocation, initializePages, 
-    updateEndJobs,currentJobsDescriptionChanged, currentLocationChanged, updateIsSearch } from '../redux/actions'
-import { TStateGithubJob, TPropsSearch} from '../types/types'
+import mapStateToProps from './mapStateToProps'
+import mapDispatchToProps from './mapDispatchToProps'
+
+import { TPropsSearch} from '../../types/types'
 import './Search.css'
 
 type PropsFromRedux = ConnectedProps<typeof connector>
@@ -22,19 +21,16 @@ class Search extends Component<Props> {
     }
 
     handleClickSearch() {
-        const { jobDescription, location, page, search, resettingStartEndValues, clearJobsCache, clearJobsVisible, searchCache, 
-            initializePages, updateIsSearch, updatePage, clearValuleExpectedCache} = this.props
+        const { jobDescription, location, resettingStartEndValues, clearJobsCache,
+            clearJobsVisible, searchCache, updateIsSearch, initializePages, clearValuleExpectedCache } = this.props
             
+            initializePages()
             clearJobsVisible()
             clearJobsCache()
             resettingStartEndValues()
             clearValuleExpectedCache()
+            searchCache(1, jobDescription, location)
             updateIsSearch(true)
-            initializePages()
-            search(jobDescription, location)
-            searchCache(page, jobDescription, location)
-            updateIsSearch(true)
-            updatePage()
         }
 
 
@@ -66,22 +62,6 @@ class Search extends Component<Props> {
     }
 }
 
-const mapStateToProps = (state: TStateGithubJob ) => ({
-    jobsVisible: state.githubjobs.jobsVisible, 
-    jobsCache: state.githubjobs.jobsCache, 
-    start: state.githubjobs.start, 
-    end: state.githubjobs.end, 
-    page: state.githubjobs.page, 
-    endJobs: state.githubjobs.endJobs,
-    valueExpectedCache: state.githubjobs.valueExpectedCache,
-    jobDescription: state.githubjobs.jobDescription,
-    location: state.githubjobs.location,
-    isSearch: state.githubjobs.isSearch
-})
-const mapDispatchToProps = (dispatch: any) => 
-    bindActionCreators({ descriptionChange, locationChanged, search, clearJobsCache, clearJobsVisible, initializePages,clearState,
-        resettingStartEndValues, searchCache, updatePage, clearCurrentDescriptionLocation, clearValuleExpectedCache, updateEndJobs,
-        currentJobsDescriptionChanged, currentLocationChanged, updateIsSearch}, dispatch)
 const connector = connect(mapStateToProps, mapDispatchToProps)
 
 export default connector(Search)

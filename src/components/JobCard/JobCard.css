@@ -1,4 +1,4 @@
-.Box-JobCard {
+.box-JobCard {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,7 +13,7 @@
     transition: all .2s ease-in-out;
 }
 
-.Title {
+.title {
     width: 208px;
     height: 38px;
     text-align: start;
@@ -26,7 +26,7 @@
    -webkit-box-orient: vertical;;
 }
 
-.Created-at-Type {
+.created-at-Type {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -35,17 +35,17 @@
     margin: 10px 0 10px 0;
 }
 
-.Created-at {
+.created-at {
     text-align: start;
     font-size: 15px;
 }
 
-.Type {
+.type {
     text-align: end;
     font-size: 15px;
 }
 
-.Location {
+.location {
     width: 208px;
     font-weight: 400;
     text-align: start;
@@ -62,7 +62,8 @@
     text-align: start;
 }
 
-button#apply-button {
+button#see-button {
+    border-radius: 30px;
     height: 40px;
     width: 210px;
     border: solid 1px rgb(223, 223, 223);
@@ -74,7 +75,16 @@ button#apply-button {
     background-color: rgb(243, 243, 243);
 }
 
-div.Box-JobCard:hover {
+button#see-button:active {
+    vertical-align: top;
+    padding: 8px 13px 6px;
+}
+
+a#see-a {
+    padding: 15px 52px;
+}
+
+div.box-JobCard:hover {
     color: white;
     position: relative;
     border-color: rgb(0, 0, 58);

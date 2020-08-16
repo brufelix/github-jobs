@@ -1,12 +1,12 @@
 import React from 'react'
 import './HowItWorks.css'
 import { FaArrowCircleRight } from 'react-icons/fa'
-import img01 from '../img/screenshot-editor.jpg'
-import img02 from '../img/screenshot-listing.jpg'
+import img01 from '../../img/screenshot-editor.jpg'
+import img02 from '../../img/screenshot-listing.jpg'
 
 export default () => {
     return (
-        <div id="page">
+        <div id="page-hw">
             <p className="note">
                 How GitHub Jobs Works
                 <br/>

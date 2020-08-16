@@ -1,8 +1,7 @@
 import { JOBS_CHANGED, START_AND_END_CHANGED, CLEAR_JOBS_VISIBLE, RESETTING_START_AND_END_VALUES,
     UPDATE_VISIBLE_JOBS, PAGE_CHANGED, UPDATE_END_JOBS, JOBS_CACHE_CHANGED, CLEAR_VALUE_EXPECTED_CACHE,
     VALUE_EXPECTED_CACHE_CHANGED, DESCRIPTION_CHANGED, LOCATION_CHANGED, CLEAR_JOBS_CACHE, INITIALIZE_PAGES,
-CURRENT_JOBS_DESCRIPTION_CHANGED, CURRENT_JOBS_LOCATION_CHANGED, 
-CLEAR_CURRENT_JOBS_DESCRIPTION_LOCATION, CLEAR_STATE, IS_SEARCH_CHANGED, FETCH_JOBS_INITIAL} from './actionsTypes'
+    CLEAR_STATE, IS_SEARCH_CHANGED, FETCH_JOBS_INITIAL } from './actionsTypes'
 import { BASEURL, headers } from '../config/config'
 import { TJob } from '../types/types'
 
@@ -74,20 +73,6 @@ export const clearState = () => ({
     type: CLEAR_STATE
 })
 
-export const currentJobsDescriptionChanged = (description: string) => ({
-    type: CURRENT_JOBS_DESCRIPTION_CHANGED,
-    payload: description
-})
-
-export const currentLocationChanged = (location: string) => ({
-    type: CURRENT_JOBS_LOCATION_CHANGED,
-    payload: location
-})
-
-export const clearCurrentDescriptionLocation = () => ({
-    type: CLEAR_CURRENT_JOBS_DESCRIPTION_LOCATION
-})
-
 export const clearValuleExpectedCache = () => ({
     type: CLEAR_VALUE_EXPECTED_CACHE
 })
@@ -103,7 +88,7 @@ export const search = (jobDescription: string = "", location: string = "") => {
             .then(res => res.json())
             .then((jobs: TJob[]) => dispatch(jobsChanged(jobs)))
             .then(() =>  dispatch(updateEndAndStart()))
-            .catch(() => {throw new Error("Error Fetch Jobs!")} )
+            .catch(() => {throw new Error("Error search!")} )
     }
 }
 
@@ -113,7 +98,8 @@ export const searchCache = (page: number, jobDescription: string = "", location:
             , {headers, mode: "cors"})
             .then(res => res.json())
             .then((jobs: TJob[]) => dispatch(jobsCacheChanged(jobs)))
-            .catch(() => {throw new Error("Error Fetch Jobs!")} )
+            .then(() => dispatch(updatePage()))
+            .catch(() => {throw new Error("Error search cache!")} )
     }
 }
 
@@ -132,7 +118,7 @@ export const fetchJobs = (page: number) => {
             .then(res => res.json())
             .then((jobs: TJob[]) => dispatch(jobsChanged(jobs)))
             .then(() => dispatch(updateEndAndStart()))
-            .catch(() => {throw new Error("Error Fetch Jobs Initial!")} )
+            .catch(() => {throw new Error("Error Fetch Jobs!")} )
     }
 }
 
@@ -141,6 +127,6 @@ export const fetchJobsCache = (page: number) => {
         fetch(`${BASEURL}positions.json?page=${page}`, {headers, mode: "cors"})
             .then(res => res.json())
             .then((jobs: TJob[]) => dispatch(jobsCacheChanged(jobs)))
-            .catch(() => {throw new Error("Error Fetch Jobs Initial!")})
+            .catch(() => {throw new Error("Error Fetch Jobs Cache!")})
     }
 }
