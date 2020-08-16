@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { TJob, TStateJobPage } from '../../types/types'
 import { BASEURL, headers } from '../../config/config'
-import './PageJob.css'
+import './JobInformation.css'
 
 const initialState = { description: "", title: "", type: "", location: "" }
 

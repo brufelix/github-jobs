@@ -5,7 +5,7 @@ import Feed from './components/Feed/'
 import AllJobs from './components/AllJobs/'
 import HowItWorks from './components/HowItWorks/'
 import Footer from './components/Footer/'
-import PageJob from './components/PageJob/'
+import PageJob from './components/JobInformation/'
 import './App.css'
 
 function App() {
