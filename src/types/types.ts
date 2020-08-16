@@ -34,7 +34,6 @@ export type TPropsFeed = {
     page: number, 
     endJobs: boolean,
     allJobs: boolean,
-    setAllJobs(boolean: boolean): void
 }
 
 export type TPropsSearch = {
@@ -54,11 +53,12 @@ export type TJobCard = {
     company: string
 }
 
-export type TStateJobPage =  { 
+export type TStateJobInformation =  { 
     description: string, 
     title: string, 
     type: string, 
-    location: string
+    location: string,
+    howToApply: string
 }
 
 export type TJob = {
@@ -69,6 +69,7 @@ export type TJob = {
     location: string
     company: string
     description: string
+    how_to_apply: string
 }
 
 export type TAction = {
