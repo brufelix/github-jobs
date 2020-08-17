@@ -95,7 +95,7 @@ export const search = (jobDescription: string = "", location: string = "") => {
 export const searchCache = (page: number, jobDescription: string = "", location: string = "") => {
     return (dispatch: any) => {
         fetch(`${BASEURL}positions.json?description=${jobDescription}&location=${location}&page=${page}`
-            , {headers, mode: "cors"})
+            ,{headers, mode: "cors"})
             .then(res => res.json())
             .then((jobs: TJob[]) => dispatch(
                 jobs.length > 9 ? jobsCacheChanged(jobs) : updateJobsVisible(jobs)))

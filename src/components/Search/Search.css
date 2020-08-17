@@ -57,8 +57,8 @@ input:focus + .label-name {
 }
 
 button {
-    cursor: pointer;
     margin-left: 90px;
+    cursor: pointer;
     height: 40px;
     width: 90px;
     border: solid 1px #005194;
