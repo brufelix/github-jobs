@@ -4,7 +4,6 @@
     justify-content: flex-start;
     width: 900px;
     height: auto;
-    min-height: 410px;
     margin: 5px 230px 0px 230px;
     background-color: whitesmoke;
 }
@@ -32,4 +31,44 @@
     color: rgb(0, 0, 58);
     margin-bottom: 10px;
     margin-top: 0;
+}
+
+.hotSerches {
+    width: 900px;
+    height: auto;
+    margin: 5px 230px 0px 230px;
+}
+
+.hotSerches .buttons > button {
+    cursor: pointer;
+    color: black;
+    height: 40px;
+    border: solid 1px #005194;
+    border-radius: 5px;
+    margin: 10px 10px 10px 10px;
+    outline: none;
+    border: solid 1px rgb(223, 223, 223);
+    border-radius: 5px;
+    background-color: white;
+    transition: all .3s ease-in-out;
+}
+
+.hotSerches .buttons > button:hover {
+    color: white;
+    position: relative;
+    border-color: rgb(0, 0, 58);
+    box-shadow: 2px 5px 25px 15px #005194;
+    background-color: rgb(0, 0, 58);
+}
+
+
+.hotSerches > .buttons {
+    display: flex;
+    justify-items: center;
+    align-content: space-between;
+}
+
+.hotSerches > h2{
+    text-align: start;
+    color: rgb(0, 0, 58);
 }
