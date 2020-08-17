@@ -37,7 +37,7 @@ class Feed extends Component<Props> {
         }
     }
 
-    handleClickSearch(description: string, location: string = "") {
+    handleClickSearch(description: string) {
         const { searchCache, updateIsSearch, resettingStartEndValues, clearJobsCache,
             clearJobsVisible, initializePages, clearValuleExpectedCache } = this.props
             
@@ -46,7 +46,7 @@ class Feed extends Component<Props> {
             clearJobsCache()
             resettingStartEndValues()
             clearValuleExpectedCache()
-            searchCache(1, description, location)
+            searchCache(1, description)
             updateIsSearch(true)
         }
 
@@ -71,7 +71,8 @@ class Feed extends Component<Props> {
 
     render(){
         const { jobsVisible, endJobs } = this.props
-        
+        const listSearchButtons = ["javascript", "python", "Linux", "Scala","Android", "IOS", "Erlang", 
+            "Rails"]
         return (
             <React.StrictMode>
                 <Search/>
@@ -85,14 +86,9 @@ class Feed extends Component<Props> {
                     (<div className="hotSerches">
                     <h2>Hot Searches</h2>
                     <div className="buttons">
-                        <button onClick={() => this.handleClickSearch("javascript")}>JavaScript</button>
-                        <button onClick={() => this.handleClickSearch("python")}>Python</button>
-                        <button onClick={() => this.handleClickSearch("Linux")}>Linux</button>
-                        <button onClick={() => this.handleClickSearch("","Europe")} >Europe</button>
-                        <button onClick={() => this.handleClickSearch("","London")}>London</button>
-                        <button onClick={() => this.handleClickSearch("PHP")}>PHP</button>
-                        <button onClick={() => this.handleClickSearch("Android")}>Android</button>
-                        <button onClick={() => this.handleClickSearch("Rails")}>Rails</button>
+                        {listSearchButtons.map((searchName: string, index: number) => 
+                            <button key={index}
+                                onClick={() => this.handleClickSearch(searchName)}>{searchName}</button>)}
                     </div>
                 </div>)}
                 <div className="div-pagination">
