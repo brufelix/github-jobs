@@ -71,7 +71,7 @@ class Feed extends Component<Props> {
 
     render(){
         const { jobsVisible, endJobs } = this.props
-        const listSearchButtons = ["javascript", "python", "Linux", "Scala","Android", "IOS", "Erlang", 
+        const listSearchButtons = ["Javascript", "Python", "Linux", "Scala","Android", "IOS", "Erlang", 
             "Rails"]
         return (
             <React.StrictMode>

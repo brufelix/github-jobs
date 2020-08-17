@@ -55,7 +55,7 @@ class Feed extends Component<Props> {
                     {jobsVisible.map((job: TJobCard, index: number) => 
                         <JobCard company={job.company} created_at={job.created_at} location={job.location} 
                         title={job.title} type={job.type} key={index} id={job.id} />)}
-                </div>
+                </div> 
                 <div className="div-pagination">
                     {!endJobs &&
                         <button id="button-pagination" onClick={() => this.getMoreJobs()}>More Awesome Jobs</button>}

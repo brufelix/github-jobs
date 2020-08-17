@@ -12,7 +12,6 @@ export default () => {
     
     useEffect(() => {
         const currentJobId: string | null = localStorage.getItem("currentJobId")   
-        if (!job.description.trim()) {
             fetch(`${BASEURL}positions/${currentJobId}`, {headers})
                 .then(res => res.json())
                 .then((job: TJob) => {
@@ -21,8 +20,7 @@ export default () => {
                 })
                 .catch(() => setJob({ ...initialState }))
                 .catch(() => {throw new Error("Error getting a single job!")})
-        }
-    }) 
+    }, [job]) 
 
         const { title, location, type, description, howToApply } = job
         return(
