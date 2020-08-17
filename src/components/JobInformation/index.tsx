@@ -1,32 +1,30 @@
-import React, {Component} from 'react'
+import React, { useState, useEffect } from 'react'
 import { IoMdArrowRoundBack } from 'react-icons/io'
-import { TJob, TStateJobInformation } from '../../types/types'
+import { TJob } from '../../types/types'
 import { BASEURL, headers } from '../../config/config'
 import './JobInformation.css'
 
 const initialState = { description: "", title: "", type: "", location: "", howToApply: "" }
 
-class PageJobs extends Component<{}, TStateJobInformation> {
+export default () => {
 
-    constructor(props: any) {
-        super(props)
-        this.state = {...initialState}
-    }
-
-    componentDidMount() {
+    const [job, setJob] = useState(initialState)
+    
+    useEffect(() => {
         const currentJobId: string | null = localStorage.getItem("currentJobId")   
-        fetch(`${BASEURL}positions/${currentJobId}`, {headers})
-        .then(res => res.json())
-        .then((job: TJob) => {
-            const { title, type, location, description, how_to_apply } = job
-            this.setState({description, title, type, location, howToApply: how_to_apply})
-        })
-        .catch(() => this.setState({ ...initialState }))
-        .catch(() => {throw new Error("Error getting a single job!")})
-    }
+        if (!job.description.trim()) {
+            fetch(`${BASEURL}positions/${currentJobId}`, {headers})
+                .then(res => res.json())
+                .then((job: TJob) => {
+                    const { title, type, location, description, how_to_apply } = job
+                    setJob({description, title, type, location, howToApply: how_to_apply})
+                })
+                .catch(() => setJob({ ...initialState }))
+                .catch(() => {throw new Error("Error getting a single job!")})
+        }
+    }) 
 
-    render(){
-        const { title, location, type, description, howToApply } = this.state
+        const { title, location, type, description, howToApply } = job
         return(
             <React.StrictMode>
                 <div className="search">
@@ -53,7 +51,4 @@ class PageJobs extends Component<{}, TStateJobInformation> {
                 </div>
             </React.StrictMode>
         )
-    }
 }
-
-export default PageJobs
