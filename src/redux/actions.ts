@@ -103,31 +103,3 @@ export const searchCache = (page: number, jobDescription: string = "", location:
             .catch(() => {throw new Error("Error search cache!")} )
     }
 }
-
-export const fetchInitJobs = () => {
-    return (dispatch: any) => {
-        fetch(`${BASEURL}positions.json?page=1`, {headers, mode: "cors"})
-        .then(res =>  res.json())
-        .then((jobs: TJob[]) =>  dispatch(fetchJobsInitial(jobs)))
-        .catch(() => { throw new Error("Error Fetch Initial Jobs!") })
-    }
-}
-
-export const fetchJobs = (page: number) => {
-    return (dispatch: any) => {
-        fetch(`${BASEURL}positions.json?page=${page}`, {headers, mode: "cors"})
-            .then(res => res.json())
-            .then((jobs: TJob[]) => dispatch(jobsChanged(jobs)))
-            .then(() => dispatch(updateEndAndStart()))
-            .catch(() => {throw new Error("Error Fetch Jobs!")} )
-    }
-}
-
-export const fetchJobsCache = (page: number) => {
-    return (dispatch: any) => {
-        fetch(`${BASEURL}positions.json?page=${page}`, {headers, mode: "cors"})
-            .then(res => res.json())
-            .then((jobs: TJob[]) => dispatch(jobsCacheChanged(jobs)))
-            .catch(() => {throw new Error("Error Fetch Jobs Cache!")})
-    }
-}
