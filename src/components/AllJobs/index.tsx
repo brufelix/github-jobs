@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 
 import { fetchJobs, fetchJobsCache  } from '../../utils/functions'
-import { updateEndAndStart, updateJobsVisible,
-    updatePage, updateEndJobs, updadeValueExpectedCache } from '../../redux/actions'
+import { updateEndAndStart, updateJobsVisible, updatePage, updateEndJobs, updadeValueExpectedCache } from '../../redux/actions'
 import { TJobCard, TStateGithubJob } from '../../types/types'
 import JobCard from '../JobCard/'
 import './AllJobs.css'
@@ -20,8 +19,6 @@ export default function AllJobs() {
     const end = useSelector((state: TStateGithubJob) => state.githubjobs.end)
     const endJobs = useSelector((state: TStateGithubJob) => state.githubjobs.endJobs)
 
-    
-
     function getMoreJobs() {
         if (jobsVisible.length < jobsCache.length ) {
             if (jobsCache.length === valueExpectedCache) {
@@ -35,7 +32,6 @@ export default function AllJobs() {
         if ( end > jobsCache.length) dispatch(updateEndJobs(true))
         }
 
-    
     useEffect(() => {
         fetchJobs(dispatch, page)
         dispatch(updatePage())
@@ -44,21 +40,21 @@ export default function AllJobs() {
     return (
         <>
             <div className="search">
-                     <IoMdArrowRoundBack style={{marginRight: "3px", marginLeft: '10px',color: "#005194"}}/>
-                     <div className="left">
-                         <a className="back" href="/">Back to search</a>
-                     </div>
-                 </div>
-                 <h2 className="title-feed">All jobs</h2>
-                 <div className="app-JobOpportunity-container">
-                     {jobsVisible.map((job: TJobCard, index: number) => 
+                <IoMdArrowRoundBack style={{marginRight: "3px", marginLeft: '10px',color: "#005194"}}/>
+                <div className="left">
+                    <a className="back" href="/">Back to search</a>
+                </div>
+            </div>
+            <h2 className="title-feed">All jobs</h2>
+            <div className="app-JobOpportunity-container">
+                    {jobsVisible.map((job: TJobCard, index: number) => 
                          <JobCard company={job.company} created_at={job.created_at} location={job.location} 
-                         title={job.title} type={job.type} key={index} id={job.id} />)}
-                 </div> 
-                 <div className="div-pagination">
-                     {!endJobs &&
-                         <button id="button-pagination" onClick={() => getMoreJobs()}>More Awesome Jobs</button>}
-                 </div>
+                            title={job.title} type={job.type} key={index} id={job.id} />)}
+            </div> 
+            <div className="div-pagination">
+                 {!endJobs &&
+                     <button id="button-pagination" onClick={() => getMoreJobs()}>More Awesome Jobs</button>}
+            </div>
         </>
     )
 

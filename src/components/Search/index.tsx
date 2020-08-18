@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { searchCache } from '../../utils/functions'
 import {descriptionChange, locationChanged, clearJobsCache, clearJobsVisible, 
     clearValuleExpectedCache, resettingStartEndValues, initializePages, updateIsSearch } from '../../redux/actions'
-import { TStateGithubJob, TJob} from '../../types/types'
+import { TStateGithubJob } from '../../types/types'
 import './Search.css'
 
 export default function Search() {

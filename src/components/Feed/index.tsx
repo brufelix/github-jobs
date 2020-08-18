@@ -1,14 +1,12 @@
 import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 
-import { TJobCard, TStateGithubJob, TJob } from '../../types/types'
+import { TJobCard, TStateGithubJob } from '../../types/types'
 import { searchCache, fetchInitJobs } from '../../utils/functions'
+import { updateEndAndStart, updateJobsVisible, updateEndJobs, resettingStartEndValues, clearJobsCache, 
+    clearJobsVisible, initializePages, clearValuleExpectedCache,updadeValueExpectedCache, updateIsSearch } from '../../redux/actions'
 import Search from '../Search/'
 import JobCard from '../JobCard/'
-import { BASEURL, headers } from '../../config/config'
-import { updateEndAndStart, updateJobsVisible, updatePage, updateEndJobs, fetchJobsInitial,
-    resettingStartEndValues, clearJobsCache, clearJobsVisible, initializePages, clearValuleExpectedCache,
-    updadeValueExpectedCache, updateIsSearch, jobsCacheChanged } from '../../redux/actions'
 import './Feed.css'
 
 function Feed(){
