@@ -3,10 +3,9 @@ import {FaSearch } from 'react-icons/fa'
 import { GoLocation } from 'react-icons/go'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { BASEURL, headers } from '../../config/config'
+import { searchCache } from '../../utils/functions'
 import {descriptionChange, locationChanged, clearJobsCache, clearJobsVisible, 
-    clearValuleExpectedCache, resettingStartEndValues, updatePage, initializePages, updateEndJobs, updateIsSearch, 
-    updateJobsVisible, jobsCacheChanged, updateEndAndStart} from '../../redux/actions'
+    clearValuleExpectedCache, resettingStartEndValues, initializePages, updateIsSearch } from '../../redux/actions'
 import { TStateGithubJob, TJob} from '../../types/types'
 import './Search.css'
 
@@ -22,29 +21,14 @@ export default function Search() {
             handleClickSearch()
         }
     }
-    
-    const searchCache = (page: number, jobDescription: string = "", location: string = "") => {
-        fetch(`${BASEURL}positions.json?description=${jobDescription}&location=${location}&page=${page}`
-                ,{headers, mode: "cors"})
-                .then(res => res.json())
-                .then((jobs: TJob[]) => {
-                    dispatch(jobsCacheChanged(jobs))
-                    dispatch(updateJobsVisible(jobs))
-                    dispatch(updateEndAndStart())
-                    dispatch(updateEndJobs(jobs.length > 9 ? false : true))
-                })
-                .then(() => dispatch(updatePage()))
-                .catch(() => {throw new Error("Error search cache!")} )
-    }
 
     function handleClickSearch() {
-            
         dispatch(initializePages())
         dispatch(clearJobsVisible())
         dispatch(clearJobsCache())
         dispatch(resettingStartEndValues())
         dispatch(clearValuleExpectedCache())
-        searchCache(1, jobDescription, location)
+        searchCache(dispatch, 1, jobDescription, location)
         dispatch(updateIsSearch(true))
     }
 

@@ -2,10 +2,10 @@ import React, {useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 
-import { BASEURL, headers } from '../../config/config'
+import { fetchJobs, fetchJobsCache  } from '../../utils/functions'
 import { updateEndAndStart, updateJobsVisible,
-    updatePage, updateEndJobs, updadeValueExpectedCache, jobsChanged, jobsCacheChanged } from '../../redux/actions'
-import { TJobCard, TStateGithubJob, TJob } from '../../types/types'
+    updatePage, updateEndJobs, updadeValueExpectedCache } from '../../redux/actions'
+import { TJobCard, TStateGithubJob } from '../../types/types'
 import JobCard from '../JobCard/'
 import './AllJobs.css'
 
@@ -20,28 +20,12 @@ export default function AllJobs() {
     const end = useSelector((state: TStateGithubJob) => state.githubjobs.end)
     const endJobs = useSelector((state: TStateGithubJob) => state.githubjobs.endJobs)
 
-    function fetchJobs(page: number){
-        fetch(`${BASEURL}positions.json?page=${page}`, {headers, mode: "cors"})
-            .then(res => res.json())
-            .then((jobs: TJob[]) => {
-                dispatch(jobsChanged(jobs))
-                dispatch(jobsCacheChanged(jobs))
-                dispatch(updateEndAndStart())
-                dispatch(updatePage)
-            }).catch(() => {throw new Error("Error Fetch Jobs!")} )
-    }
-
-    function fetchJobsCache(page: number) {
-        fetch(`${BASEURL}positions.json?page=${page}`, {headers, mode: "cors"})
-            .then(res => res.json())
-            .then((jobs: TJob[]) => dispatch(jobsCacheChanged(jobs)))
-            .catch(() => {throw new Error("Error Fetch Jobs Cache!")})
-    }
+    
 
     function getMoreJobs() {
         if (jobsVisible.length < jobsCache.length ) {
             if (jobsCache.length === valueExpectedCache) {
-                fetchJobsCache(page)
+                fetchJobsCache(dispatch, page)
                 dispatch(updadeValueExpectedCache())
                 dispatch(updatePage())
             }
@@ -53,7 +37,7 @@ export default function AllJobs() {
 
     
     useEffect(() => {
-        fetchJobs(page)
+        fetchJobs(dispatch, page)
         dispatch(updatePage())
     }, [])
 

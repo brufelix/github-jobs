@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 
 import { TJobCard, TStateGithubJob, TJob } from '../../types/types'
+import { searchCache, fetchInitJobs } from '../../utils/functions'
 import Search from '../Search/'
 import JobCard from '../JobCard/'
 import { BASEURL, headers } from '../../config/config'
@@ -23,32 +24,10 @@ function Feed(){
     const location = useSelector((state: TStateGithubJob) => state.githubjobs.location)
     const end = useSelector((state: TStateGithubJob) => state.githubjobs.end)
     const listSearchButtons = ["Javascript", "Python", "Linux", "Scala","Android", "IOS", "Erlang", "Rails" ]
-    
-    const searchCache = (page: number, jobDescription: string = "", location: string = "") => {
-        fetch(`${BASEURL}positions.json?description=${jobDescription}&location=${location}&page=${page}`
-                ,{headers, mode: "cors"})
-                .then(res => res.json())
-                .then((jobs: TJob[]) => {
-                    dispatch(jobsCacheChanged(jobs))
-                    dispatch(updateJobsVisible(jobs))
-                    dispatch(updateEndAndStart())
-                    dispatch(updateEndJobs(jobs.length > 9 ? false : true))
-                })
-                .then(() => dispatch(updatePage()))
-                .catch(() => {throw new Error("Error search cache!")} )
-    }
-
-    function fetchInitJobs(page: number, jobDescription: string = "", location: string = ""){
-            fetch(`${BASEURL}positions.json?description=${jobDescription}&location=${location}&page=${page}`
-                ,{headers, mode: "cors"})
-                .then(res => res.json())
-                .then((jobs: TJob[]) => dispatch(fetchJobsInitial(jobs)))
-                .catch(() => {throw new Error("Error search cache!")} )
-    }
 
     function getMoreJobs() {
         if ( jobsCache.length === valueExpectedCache ) {
-            searchCache(page, jobDescription, location)
+            searchCache(dispatch, page, jobDescription, location)
             dispatch(updadeValueExpectedCache())
         }
             
@@ -69,7 +48,7 @@ function Feed(){
     }, [jobsVisible, jobsCache])
 
     useEffect(() => {
-        fetchInitJobs(1)
+        fetchInitJobs(dispatch, 1)
         dispatch(updateEndJobs(true))
     }, [])
 
@@ -79,7 +58,7 @@ function Feed(){
         dispatch(clearJobsCache())
         dispatch(resettingStartEndValues())
         dispatch(clearValuleExpectedCache())
-        searchCache(1, jobDescription)
+        searchCache(dispatch, 1, jobDescription)
         dispatch(updateIsSearch(true))
     }
 
