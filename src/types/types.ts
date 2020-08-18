@@ -26,22 +26,8 @@ export type TStateGithubJob = {
     }
 }
 
-export type TPropsFeed = {
-    jobsVisible: TJob[], 
-    jobsCache: TJob[], 
-    start: number, 
-    end: number, 
-    page: number, 
-    endJobs: boolean,
-    allJobs: boolean,
-}
-
 export type TPropsSearch = {
-    jobsVisible: TJob[], 
-    jobsCache: TJob[], 
-    start: number, 
-    end: number, 
-    page: number,
+    setLoad(boolean?: boolean): void
 }
 
 export type TJobCard = {

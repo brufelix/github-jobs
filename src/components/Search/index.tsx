@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { searchCache } from '../../utils/functions'
 import {descriptionChange, locationChanged, clearJobsCache, clearJobsVisible, 
     clearValuleExpectedCache, resettingStartEndValues, initializePages, updateIsSearch } from '../../redux/actions'
-import { TStateGithubJob } from '../../types/types'
+import { TStateGithubJob, TPropsSearch } from '../../types/types'
 import './Search.css'
 
-export default function Search() {
+export default function Search(props: TPropsSearch) {
 
     const dispatch = useDispatch()
 
@@ -23,6 +23,8 @@ export default function Search() {
     }
 
     function handleClickSearch() {
+        const { setLoad } = props
+        setLoad()
         dispatch(initializePages())
         dispatch(clearJobsVisible())
         dispatch(clearJobsCache())
@@ -30,6 +32,7 @@ export default function Search() {
         dispatch(clearValuleExpectedCache())
         searchCache(dispatch, 1, jobDescription, location)
         dispatch(updateIsSearch(true))
+        setLoad(false) 
     }
 
     return (
