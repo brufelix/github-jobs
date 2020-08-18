@@ -8,7 +8,7 @@ import { TJobCard, TStateGithubJob } from '../../types/types'
 import JobCard from '../JobCard/'
 import './AllJobs.css'
 
-export default function AllJobs() {
+function AllJobs() {
 
     const dispatch = useDispatch()
 
@@ -57,5 +57,6 @@ export default function AllJobs() {
             </div>
         </>
     )
-
 }
+
+export default AllJobs
