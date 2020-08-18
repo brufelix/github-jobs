@@ -1,105 +1,111 @@
-import React, {Component} from 'react'
-import { connect, ConnectedProps } from 'react-redux'
+import React, {useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 
-import mapStateToProps from './mapStateToProps'
-import mapDispatchToProps from './mapDispatchToProps'
-import { TJobCard, TPropsFeed } from '../../types/types'
+import { TJobCard, TStateGithubJob, TJob } from '../../types/types'
 import Search from '../Search/'
 import JobCard from '../JobCard/'
+import { BASEURL, headers } from '../../config/config'
+import { updateEndAndStart, updateJobsVisible, updatePage, updateEndJobs, fetchJobsInitial,
+    resettingStartEndValues, clearJobsCache, clearJobsVisible, initializePages, clearValuleExpectedCache,
+    updadeValueExpectedCache, updateIsSearch, jobsCacheChanged } from '../../redux/actions'
 import './Feed.css'
 
-type PropsFromRedux = ConnectedProps<typeof connector>
-type Props = PropsFromRedux & TPropsFeed
+function Feed(){
 
-class Feed extends Component<Props> {
-    constructor(props: Props) {
-        super(props)
-        this.getMoreJobs.bind(this)
-        this.handleClickSearch.bind(this)
+    const dispatch = useDispatch()
+
+    const jobsVisible = useSelector((state: TStateGithubJob) => state.githubjobs.jobsVisible)
+    const jobsCache = useSelector((state: TStateGithubJob) => state.githubjobs.jobsCache)
+    const page = useSelector((state: TStateGithubJob) => state.githubjobs.page)
+    const endJobs = useSelector((state: TStateGithubJob) => state.githubjobs.endJobs)
+    const valueExpectedCache = useSelector((state: TStateGithubJob) => state.githubjobs.valueExpectedCache)
+    const jobDescription = useSelector((state: TStateGithubJob) => state.githubjobs.jobDescription)
+    const location = useSelector((state: TStateGithubJob) => state.githubjobs.location)
+    const end = useSelector((state: TStateGithubJob) => state.githubjobs.end)
+    const listSearchButtons = ["Javascript", "Python", "Linux", "Scala","Android", "IOS", "Erlang", "Rails" ]
+    
+    const searchCache = (page: number, jobDescription: string = "", location: string = "") => {
+        fetch(`${BASEURL}positions.json?description=${jobDescription}&location=${location}&page=${page}`
+                ,{headers, mode: "cors"})
+                .then(res => res.json())
+                .then((jobs: TJob[]) => {
+                    dispatch(jobsCacheChanged(jobs))
+                    dispatch(updateJobsVisible(jobs))
+                    dispatch(updateEndJobs(jobs.length > 9 ? false : true))
+                })
+                .then(() => dispatch(updatePage()))
+                .catch(() => {throw new Error("Error search cache!")} )
     }
 
-    getMoreJobs() {
-        const { jobsVisible, jobsCache, page, valueExpectedCache, jobDescription, location, end,
-            updateEndJobs,  updateJobsVisible, updateEndAndStart,  updadeValueExpectedCache, searchCache } = this.props
-            
+    function fetchInitJobs(page: number, jobDescription: string = "", location: string = ""){
+            fetch(`${BASEURL}positions.json?description=${jobDescription}&location=${location}&page=${page}`
+                ,{headers, mode: "cors"})
+                .then(res => res.json())
+                .then((jobs: TJob[]) => dispatch(fetchJobsInitial(jobs)))
+                .catch(() => {throw new Error("Error search cache!")} )
+    }
+
+    function getMoreJobs() {
         if ( jobsCache.length === valueExpectedCache ) {
             searchCache(page, jobDescription, location)
-            updadeValueExpectedCache()
+            dispatch(updadeValueExpectedCache())
         }
             
-        if ( jobsVisible.length < jobsCache.length  ) {
-            updateJobsVisible(jobsCache)
-            updateEndAndStart()
+        if (jobsVisible.length < jobsCache.length) {
+            dispatch(updateJobsVisible(jobsCache))
+            dispatch(updateEndAndStart())
         }
 
         if (end > jobsCache.length) {
-            updateEndJobs(true)
+            dispatch(updateEndJobs(true))
         }
     }
 
-    handleClickSearch(description: string) {
-        const { searchCache, updateIsSearch, resettingStartEndValues, clearJobsCache,
-            clearJobsVisible, initializePages, clearValuleExpectedCache } = this.props
-            
-            initializePages()
-            clearJobsVisible()
-            clearJobsCache()
-            resettingStartEndValues()
-            clearValuleExpectedCache()
-            searchCache(1, description)
-            updateIsSearch(true)
+    useEffect(() => {
+        if (end > jobsCache.length) {
+            dispatch(updateEndJobs(true))
         }
+    }, [jobsVisible, jobsCache])
 
-    componentDidUpdate() {
-        const { isSearch, end, jobsCache, updateEndAndStart, 
-            updateIsSearch, updateEndJobs, updateJobsVisible } = this.props
-        if (isSearch && end < jobsCache.length) {
-            updateJobsVisible(jobsCache)
-            updateEndAndStart()
-            updateEndJobs(false)
-            updateIsSearch(false)
-        } 
+    useEffect(() => {
+        fetchInitJobs(1)
+        dispatch(updateEndJobs(true))
+    }, [])
+
+    function handleClickSearch(jobDescription: string) {
+        dispatch(initializePages())
+        dispatch(clearJobsVisible())
+        dispatch(clearJobsCache())
+        dispatch(resettingStartEndValues())
+        dispatch(clearValuleExpectedCache())
+        searchCache(1, jobDescription)
+        dispatch(updateIsSearch(true))
     }
 
-    componentDidMount() {
-        const { isSearch, end, jobsCache, fetchInitJobs, updateEndJobs } = this.props
-        if (!isSearch) {
-            fetchInitJobs()
-        }
-        if (end > jobsCache.length) updateEndJobs(true)
-    }
-
-    render(){
-        const { jobsVisible, endJobs } = this.props
-        const listSearchButtons = ["Javascript", "Python", "Linux", "Scala","Android", "IOS", "Erlang", 
-            "Rails"]
-        return (
-            <React.StrictMode>
-                <Search/>
-                <h2 className="title-feed">Newly Added Jobs</h2>
-                <div className="app-JobOpportunity-container">
-                    {jobsVisible.map((job: TJobCard, index: number) => 
-                        <JobCard company={job.company} created_at={job.created_at} location={job.location} 
+    return (
+        <>
+            <Search/>
+            <h2 className="title-feed">Newly Added Jobs</h2>
+            <div className="app-JobOpportunity-container">
+                {jobsVisible.map((job: TJobCard, index: number) => 
+                    <JobCard company={job.company} created_at={job.created_at} location={job.location} 
                         title={job.title} type={job.type} key={index} id={job.id} />)}
-                </div>
-                { endJobs && 
-                    (<div className="hotSerches">
+            </div>
+            {endJobs && 
+                (<div className="hotSerches">
                     <h2>Hot Searches</h2>
                     <div className="buttons">
-                        {listSearchButtons.map((searchName: string, index: number) => 
-                            <button key={index}
-                                onClick={() => this.handleClickSearch(searchName)}>{searchName}</button>)}
+                    {listSearchButtons.map((searchName: string, index: number) => 
+                        <button key={index}
+                            onClick={() => handleClickSearch(searchName)}>{searchName}</button>)}
                     </div>
                 </div>)}
-                <div className="div-pagination">
-                    {!endJobs &&
-                        <button id="button-pagination" onClick={() => this.getMoreJobs()}>More Awesome Jobs</button>}
-                </div>
-            </React.StrictMode>
-        )
-    }
+            <div className="div-pagination">
+                {!endJobs &&
+                   (<button id="button-pagination" onClick={() => getMoreJobs()}>More Awesome Jobs</button>)}
+            </div>
+        </>
+    )
 }
 
-const connector = connect(mapStateToProps, mapDispatchToProps)
-
-export default connector(Feed)
+export default Feed

@@ -37,7 +37,7 @@ class Search extends Component<Props> {
         const { jobDescription, location, descriptionChange, locationChanged } = this.props
 
         return(
-            <React.StrictMode>
+            <>
                 <div className="App-search">
                     <div className="search-field-containes">
                         <div className="box">
@@ -56,7 +56,7 @@ class Search extends Component<Props> {
                         <button onClick={() => this.handleClickSearch()}>Search</button>
                     </div>
                 </div>
-            </React.StrictMode>
+            </>
         )
     }
 }

@@ -24,7 +24,7 @@ export default () => {
 
         const { title, location, type, description, howToApply } = job
         return(
-            <React.StrictMode>
+            <>
                 <div className="search">
                     <IoMdArrowRoundBack style={{marginRight: "3px", marginLeft: "10px", color: "#005194"}}/>
                     <div className="left">
@@ -47,6 +47,6 @@ export default () => {
                         dangerouslySetInnerHTML={{__html: howToApply}}>
                     </div>
                 </div>
-            </React.StrictMode>
+            </>
         )
 }

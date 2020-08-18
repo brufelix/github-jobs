@@ -43,7 +43,7 @@ class Feed extends Component<Props> {
         const { jobsVisible, endJobs } = this.props
         
         return (
-            <React.StrictMode>
+            <>
                 <div className="search">
                     <IoMdArrowRoundBack style={{marginRight: "3px", marginLeft: '10px',color: "#005194"}}/>
                     <div className="left">
@@ -60,7 +60,7 @@ class Feed extends Component<Props> {
                     {!endJobs &&
                         <button id="button-pagination" onClick={() => this.getMoreJobs()}>More Awesome Jobs</button>}
                 </div>
-            </React.StrictMode>
+            </>
         )
     }
 }
