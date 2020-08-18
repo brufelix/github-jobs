@@ -31,6 +31,7 @@ function Feed(){
                 .then((jobs: TJob[]) => {
                     dispatch(jobsCacheChanged(jobs))
                     dispatch(updateJobsVisible(jobs))
+                    dispatch(updateEndAndStart())
                     dispatch(updateEndJobs(jobs.length > 9 ? false : true))
                 })
                 .then(() => dispatch(updatePage()))
