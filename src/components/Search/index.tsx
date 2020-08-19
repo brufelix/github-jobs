@@ -24,7 +24,7 @@ export default function Search(props: TPropsSearch) {
 
     function handleClickSearch() {
         const { setLoad } = props
-        setLoad()
+        setLoad(true)
         dispatch(initializePages())
         dispatch(clearJobsVisible())
         dispatch(clearJobsCache())
