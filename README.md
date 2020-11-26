@@ -1,5 +1,5 @@
 
-## Visit the application in progress [Github Jobs Replica](https://github-jobs-g5qhzz5y9.vercel.app/).
+## Visite  [Github Jobs Replica](https://github-jobs-g5qhzz5y9.vercel.app/).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
