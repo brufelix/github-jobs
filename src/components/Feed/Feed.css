@@ -5,6 +5,7 @@
 .app-JobOpportunity-container {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
 
     height: auto;
@@ -14,10 +15,6 @@
     margin: 0;
 
     background-color: whitesmoke;
-}
-
-.app-JobOpportunity-container>img {
-    padding-left: 300px;
 }
 
 .div-pagination {
