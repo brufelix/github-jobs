@@ -85,10 +85,24 @@ function Feed() {
             <Search setLoad={timeOutSpinner} />
             <h2 className="title-feed">Newly Added Jobs</h2>
             <div className="app-JobOpportunity-container">
-                {loading ? <img src={spinnerImg} alt="Loading" style={{ width: 250, height: 50 }}></img> :
-                    jobsVisible.map((job: TJobCard, index: number) =>
-                        <JobCard company={job.company} created_at={job.created_at} location={job.location}
-                            title={job.title} type={job.type} key={index} id={job.id} />)
+                {loading ?
+                    <img
+                        src={spinnerImg}
+                        alt="Loading"
+                        style={{ width: 250, height: 50 }}
+                    /> :
+                    jobsVisible.map(
+                        (job: TJobCard, index: number) =>
+                            <JobCard
+                                id={job.id}
+                                key={index}
+                                company={job.company}
+                                created_at={job.created_at}
+                                location={job.location}
+                                title={job.title}
+                                type={job.type}
+                            />
+                    )
                 }
             </div>
             {endJobs && !loading &&
