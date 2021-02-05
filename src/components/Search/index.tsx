@@ -62,7 +62,7 @@ export default function Search(props: TPropsSearch) {
                     <div
                         className="box"
                     >
-                        <GoLocation style={{ marginRight: "15px", marginLeft: "12px" }} />
+                        <GoLocation style={{ marginRight: "15px", marginLeft: "5px" }} />
                         <input
                             name="Location"
                             onChange={(e) => dispatch(locationChanged(e))}

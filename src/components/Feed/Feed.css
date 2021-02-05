@@ -56,8 +56,8 @@
 
 .hotSerches>.buttons {
     display: flex;
-    justify-items: center;
-    align-content: space-between;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
 }
 
