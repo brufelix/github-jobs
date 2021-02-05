@@ -1,14 +1,3 @@
-.app-JobOpportunity-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 900px;
-    height: auto;
-    min-height: 410px;
-    margin: 5px 230px 0px 230px;
-    background-color: whitesmoke;
-}
-
 .search {
     display: flex;
     align-items: flex-start;
@@ -39,12 +28,4 @@
     width: 400px;
     margin-top: 24px;
     margin-left: 20px;
-}
-
-.title-feed {
-    display: flex;
-    margin: 5px 240px 0px 240px;
-    color: rgb(0, 0, 58);
-    margin-bottom: 10px;
-    margin-top: 0;
 }
