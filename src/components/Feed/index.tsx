@@ -85,6 +85,7 @@ function Feed() {
             <Search setLoad={timeOutSpinner} />
             <h2 className="title-feed">Newly Added Jobs</h2>
             <div className="app-JobOpportunity-container">
+<<<<<<< HEAD
                 {loading ?
                     <img
                         src={spinnerImg}
@@ -103,6 +104,12 @@ function Feed() {
                                 type={job.type}
                             />
                     )
+=======
+                {loading ? <img src={spinnerImg} alt="Loading" style={{ width: 250, height: 50 }}></img> :
+                    jobsVisible.map((job: TJobCard, index: number) =>
+                        <JobCard company={job.company} created_at={job.created_at} location={job.location}
+                            title={job.title} type={job.type} key={index} id={job.id} />)
+>>>>>>> ffccfa8 (fix: removing from the card container, and adding padding)
                 }
             </div>
             {endJobs && !loading &&
