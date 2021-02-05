@@ -95,3 +95,15 @@
     text-align: start;
     color: rgb(0, 0, 58);
 }
+
+@media(max-width: 720px) {
+    .container-feed {
+        padding: 0 5%;
+    }
+}
+
+@media(max-width: 560px) {
+    .container-feed {
+        padding: 2%;
+    }
+}
