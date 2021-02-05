@@ -54,20 +54,31 @@
 
 .hotSerches {
     height: auto;
-    width: 900px;
+    width: 100%;
+}
+
+.hotSerches>.buttons {
+    display: flex;
+    justify-items: center;
+    align-content: space-between;
+    flex-wrap: wrap;
 }
 
 .hotSerches .buttons>button {
     cursor: pointer;
-    color: black;
-    height: 40px;
-    border: solid 1px #005194;
-    border-radius: 5px;
-    margin: 10px 10px 10px 10px;
     outline: none;
+
+    height: 40px;
+
+    margin: 10px 10px 10px 10px;
+
     border: solid 1px rgb(223, 223, 223);
     border-radius: 5px;
+
+
     background-color: white;
+    color: black;
+
     transition: all .3s ease-in-out;
 }
 
@@ -79,12 +90,6 @@
     background-color: rgb(0, 0, 58);
 }
 
-
-.hotSerches>.buttons {
-    display: flex;
-    justify-items: center;
-    align-content: space-between;
-}
 
 .hotSerches>h2 {
     text-align: start;
