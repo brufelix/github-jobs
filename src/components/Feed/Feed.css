@@ -23,6 +23,8 @@
     justify-content: center;
     align-items: center;
 
+    width: 100%;
+
     margin-bottom: 10px;
 
     background-color: whitesmoke;
@@ -34,10 +36,9 @@
     justify-content: center;
     align-items: center;
 
-    width: 400px;
+    width: 100%;
 
-    margin-top: 24px;
-    margin-left: 20px;
+    margin: 0;
 }
 
 .title-feed {

@@ -14,14 +14,14 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Header />
-          <Switch>
-              <Route path="/" exact component={Feed}/>
-              <Route path="/positions" component={AllJobs}/>
-              <Route path="/faq" component={HowItWorks}/>
-              <Route path="/job" component={PageJob}/>
-              <Route path="/api" component={DocAPI}/>
-              <Redirect from="*" to="/" />
-          </Switch>
+        <Switch>
+          <Route path="/" exact component={Feed} />
+          <Route path="/positions" component={AllJobs} />
+          <Route path="/faq" component={HowItWorks} />
+          <Route path="/job" component={PageJob} />
+          <Route path="/api" component={DocAPI} />
+          <Redirect from="*" to="/" />
+        </Switch>
         <Footer />
       </div>
     </BrowserRouter>
