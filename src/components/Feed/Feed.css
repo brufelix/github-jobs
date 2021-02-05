@@ -5,10 +5,7 @@
 .app-JobOpportunity-container {
     display: flex;
     justify-content: center;
-<<<<<<< HEAD
     align-items: center;
-=======
->>>>>>> ffccfa8 (fix: removing from the card container, and adding padding)
     flex-wrap: wrap;
 
     height: auto;
@@ -16,17 +13,8 @@
     width: 100%;
 
     margin: 0;
-<<<<<<< HEAD
 
     background-color: whitesmoke;
-=======
-
-    background-color: whitesmoke;
-}
-
-.app-JobOpportunity-container>img {
-    padding-left: 300px;
->>>>>>> ffccfa8 (fix: removing from the card container, and adding padding)
 }
 
 .div-pagination {
@@ -35,11 +23,8 @@
     justify-content: center;
     align-items: center;
 
-<<<<<<< HEAD
     width: 100%;
 
-=======
->>>>>>> ffccfa8 (fix: removing from the card container, and adding padding)
     margin-bottom: 10px;
 
     background-color: whitesmoke;
@@ -51,16 +36,9 @@
     justify-content: center;
     align-items: center;
 
-<<<<<<< HEAD
     width: 100%;
 
     margin: 0;
-=======
-    width: 400px;
-
-    margin-top: 24px;
-    margin-left: 20px;
->>>>>>> ffccfa8 (fix: removing from the card container, and adding padding)
 }
 
 .title-feed {
@@ -74,7 +52,6 @@
 
 .hotSerches {
     height: auto;
-<<<<<<< HEAD
     width: 100%;
 }
 
@@ -83,9 +60,6 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-=======
-    width: 900px;
->>>>>>> ffccfa8 (fix: removing from the card container, and adding padding)
 }
 
 .hotSerches .buttons>button {
@@ -107,30 +81,17 @@
 }
 
 .hotSerches .buttons>button:hover {
-<<<<<<< HEAD
-=======
-    color: white;
->>>>>>> ffccfa8 (fix: removing from the card container, and adding padding)
     position: relative;
 
     box-shadow: 2px 5px 25px 15px #005194;
 
     border-color: rgb(0, 0, 58);
 
-<<<<<<< HEAD
     color: white;
     background-color: rgb(0, 0, 58);
 }
 
 
-=======
-.hotSerches>.buttons {
-    display: flex;
-    justify-items: center;
-    align-content: space-between;
-}
-
->>>>>>> ffccfa8 (fix: removing from the card container, and adding padding)
 .hotSerches>h2 {
     text-align: start;
     color: rgb(0, 0, 58);
