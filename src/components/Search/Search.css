@@ -74,6 +74,10 @@ input {
     margin-left: 0;
 }
 
+.search-field-button {
+    margin-left: 0;
+}
+
 button {
     cursor: pointer;
 
