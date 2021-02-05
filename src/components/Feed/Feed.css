@@ -80,10 +80,13 @@
 }
 
 .hotSerches .buttons>button:hover {
-    color: white;
     position: relative;
-    border-color: rgb(0, 0, 58);
+
     box-shadow: 2px 5px 25px 15px #005194;
+
+    border-color: rgb(0, 0, 58);
+
+    color: white;
     background-color: rgb(0, 0, 58);
 }
 
