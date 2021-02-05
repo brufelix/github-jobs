@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 
-import { fetchJobs, fetchJobsCache  } from '../../utils/functions'
+import { fetchJobs, fetchJobsCache } from '../../utils/functions'
 import { updateEndAndStart, updateJobsVisible, updatePage, updateEndJobs, updadeValueExpectedCache } from '../../redux/actions'
 import { TJobCard, TStateGithubJob } from '../../types/types'
 import spinnerImg from '../../asset/spinner.svg'
@@ -20,7 +20,7 @@ function AllJobs() {
     const end = useSelector((state: TStateGithubJob) => state.githubjobs.end)
     const endJobs = useSelector((state: TStateGithubJob) => state.githubjobs.endJobs)
 
-    function timeOutSpinner(boolean: boolean = true ){
+    function timeOutSpinner(boolean: boolean = true) {
         if (boolean) {
             setLoading(boolean)
         } else {
@@ -31,7 +31,7 @@ function AllJobs() {
     }
 
     function getMoreJobs() {
-        if (jobsVisible.length < jobsCache.length ) {
+        if (jobsVisible.length < jobsCache.length) {
             if (jobsCache.length === valueExpectedCache) {
                 fetchJobsCache(dispatch, page)
                 dispatch(updadeValueExpectedCache())
@@ -40,33 +40,34 @@ function AllJobs() {
             dispatch(updateJobsVisible(jobsCache))
             dispatch(updateEndAndStart())
         }
-        if ( end > jobsCache.length) dispatch(updateEndJobs(true))
-        }
+        if (end > jobsCache.length) dispatch(updateEndJobs(true))
+    }
 
     useEffect(() => {
         fetchJobs(dispatch, page)
         dispatch(updatePage())
         timeOutSpinner(false)
+        // eslint-disable-next-line
     }, [])
 
     return (
         <>
             <div className="search">
-                <IoMdArrowRoundBack style={{marginRight: "3px", marginLeft: '10px',color: "#005194"}}/>
+                <IoMdArrowRoundBack style={{ marginRight: "3px", marginLeft: '10px', color: "#005194" }} />
                 <div className="left">
                     <a className="back" href="/">Back to search</a>
                 </div>
             </div>
             <h2 className="title-feed">All jobs</h2>
             <div className="app-JobOpportunity-container">
-                {loading ?  <img src={spinnerImg} alt="loading..." style={{ width: 250, height: 50 }}></img> : 
-                    jobsVisible.map((job: TJobCard, index: number) => 
-                        <JobCard company={job.company} created_at={job.created_at} location={job.location} 
+                {loading ? <img src={spinnerImg} alt="loading..." style={{ width: 250, height: 50 }}></img> :
+                    jobsVisible.map((job: TJobCard, index: number) =>
+                        <JobCard company={job.company} created_at={job.created_at} location={job.location}
                             title={job.title} type={job.type} key={index} id={job.id} />)}
-            </div> 
+            </div>
             <div className="div-pagination">
-                 {!endJobs && !loading &&
-                     <button id="button-pagination" onClick={() => getMoreJobs()}>More Awesome Jobs</button>}
+                {!endJobs && !loading &&
+                    <button id="button-pagination" onClick={() => getMoreJobs()}>More Awesome Jobs</button>}
             </div>
         </>
     )
