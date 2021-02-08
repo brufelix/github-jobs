@@ -7,7 +7,7 @@ export default () => {
                 <h2 id="logo">
                     <a href="/" >GitHub <span>Jobs</span> </a>
                 </h2>
-                <ul>
+                <ul className="header-nav-links" >
                     <li>
                          <a href="/positions" >All jobs</a>
                     </li>
