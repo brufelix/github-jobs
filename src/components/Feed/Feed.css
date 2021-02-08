@@ -108,3 +108,9 @@
         padding: 2%;
     }
 }
+
+@media(max-width: 830px) and (orientation: landscape) {
+    .container-feed {
+        padding: 0 50px 10px 50px;
+    }
+}

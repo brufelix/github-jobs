@@ -54,3 +54,10 @@ ul {
         font-size: small;
     }
 }
+
+@media(max-width: 830px) and (orientation: landscape) {
+    #footer {
+        flex-direction: initial;
+        padding: initial;
+    }
+}
