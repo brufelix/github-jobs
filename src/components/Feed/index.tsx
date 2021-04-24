@@ -110,13 +110,23 @@ function Feed() {
                     <h2>Hot Searches</h2>
                     <div className="buttons">
                         {listSearchButtons.map((searchName: string, index: number) =>
-                            <button key={index}
-                                onClick={() => handleClickSearch(searchName)}>{searchName}</button>)}
+                            <button
+                                key={index}
+                                onClick={() => handleClickSearch(searchName)}
+                            >
+                                {searchName}
+                            </button>)
+                        }
                     </div>
                 </div>)}
             <div className="div-pagination">
                 {!endJobs && !loading &&
-                    (<button id="button-pagination" onClick={() => getMoreJobs()}>More Awesome Jobs</button>)}
+                    (<button
+                        id="button-pagination"
+                        onClick={() => getMoreJobs()}
+                    >
+                        More Awesome Jobs
+                    </button>)}
             </div>
         </div>
     )

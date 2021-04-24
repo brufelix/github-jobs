@@ -1,10 +1,13 @@
-.search {
+.container-all-jobs {
+    padding: 0 80px;
+}
+
+.back {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     flex-direction: row;
-    width: 900px;
-    margin: 15px 230px 20px 230px;
+    margin: 10px 0;
 }
 
 .back {
