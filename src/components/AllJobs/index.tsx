@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 
-import { fetchJobs, fetchJobsCache } from '../../utils/functions'
+import {  fetchJobsCache } from '../../utils/functions'
 import { updateEndAndStart, updateJobsVisible, updatePage, updateEndJobs, updadeValueExpectedCache } from '../../redux/actions'
 import { TJobCard, TStateGithubJob } from '../../types/types'
 import spinnerImg from '../../asset/spinner.svg'
@@ -44,8 +44,8 @@ function AllJobs() {
 	}
 
 	useEffect(() => {
-		fetchJobs(dispatch, page)
-		dispatch(updatePage())
+		// fetchJobs(dispatch, page)
+		// dispatch(updatePage())
 		timeOutSpinner(false)
 		// eslint-disable-next-line
 	}, [])
@@ -103,7 +103,7 @@ function AllJobs() {
 						onClick={() => getMoreJobs()}
 					>
 						More Awesome Jobs
-						</button>
+					</button>
 				}
 			</div>
 		</div>

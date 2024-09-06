@@ -80,6 +80,10 @@ function Feed() {
         timeOutSpinner(false)
     }
 
+    if (typeof handleClickSearch) {
+
+    }
+
     return (
         <div className="container-feed">
             <Search setLoad={timeOutSpinner} />
@@ -112,7 +116,7 @@ function Feed() {
                         {listSearchButtons.map((searchName: string, index: number) =>
                             <button
                                 key={index}
-                                onClick={() => handleClickSearch(searchName)}
+                            // onClick={() => handleClickSearch(searchName)}
                             >
                                 {searchName}
                             </button>)
